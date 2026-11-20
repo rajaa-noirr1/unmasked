@@ -20,14 +20,17 @@ import './styles/patterns.css'
 import './styles/how.css'
 import App from './App'
 import { LangProvider } from './i18n'
+import { ContentProvider } from './i18n/data'
 import { routerBase } from './lib/asset'
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <LangProvider>
-      <BrowserRouter basename={routerBase}>
-        <App />
-      </BrowserRouter>
+      <ContentProvider>
+        <BrowserRouter basename={routerBase}>
+          <App />
+        </BrowserRouter>
+      </ContentProvider>
     </LangProvider>
   </React.StrictMode>,
 )

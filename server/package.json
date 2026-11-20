@@ -1,0 +1,18 @@
+{
+  "name": "unmasked-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Unmasked API: Express on PostgreSQL 17, plain SQL",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch --env-file=.env src/index.js",
+    "start": "node --env-file=.env src/index.js",
+    "db:seed:build": "node scripts/build-seed.mjs",
+    "db:reset": "node --env-file=.env scripts/db-reset.mjs",
+    "test": "node --env-file=.env --test test/*.test.js"
+  },
+  "dependencies": {
+    "express": "4.21.2",
+    "pg": "8.13.1"
+  }
+}

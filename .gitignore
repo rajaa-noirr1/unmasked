@@ -3,3 +3,5 @@ dist/
 dist-pages/
 *.log
 .claude/
+.env
+photos-original/

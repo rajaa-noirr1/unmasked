@@ -4,6 +4,7 @@ import { Link, NavLink, useLocation } from 'react-router'
 import LogoMark from './Logo'
 import { SHOW_PATTERNS } from '../config'
 import { LANGS, useLang, useT } from '../i18n'
+import { useContentSource } from '../i18n/data'
 
 const ALL_NAV = [
   { to: '/map', name: ['The Map', 'نەخشەکە'], note: ['what each part says', 'هەر بەشێک چی دەڵێت'] },
@@ -74,6 +75,7 @@ export function Nav() {
 
 export function Footer() {
   const t = useT()
+  const source = useContentSource()
   return (
     <footer className="footer">
       <div className="wrap footer-grid">
@@ -90,6 +92,7 @@ export function Footer() {
         <div className="footer-credits">
           <p>{t(['Photos in the tests are film and TV stills, the property of their owners, used here for teaching.', 'وێنەکانی ناو تاقیکردنەوەکان وێنەی فیلم و زنجیرەن، موڵکی خاوەنەکانیانن، و لێرەدا بۆ فێرکردن بەکارهاتوون.'])}</p>
           <p>{t(['Face tracking by MediaPipe. Visual effects adapted from React Bits by David Haz.', 'شوێنکەوتنی دەموچاو بە MediaPipe. کاریگەرییە بینراوەکان لە React Bits ـی David Haz وەرگیراون.'])} <Link to="/how#sources">{t(['All sources', 'هەموو سەرچاوەکان'])}</Link></p>
+          <p className="footer-source">{source === 'database' ? t(['Content: live from the database (PostgreSQL).', 'ناوەڕۆک: ڕاستەوخۆ لە داتابەیسەکەوە (PostgreSQL).']) : t(['Content: the built-in copy.', 'ناوەڕۆک: کۆپییە ناوخۆییەکە.'])}</p>
         </div>
       </div>
     </footer>

@@ -156,3 +156,8 @@
 }
 /* Zain comes in fixed weights, so Kurdish headlines warm in colour only, without jumping between weights */
 html[lang='ckb'] .hl-u { font-weight: var(--w0, 400); }
+
+/* how everyone answered a test question (from the database) */
+.crowd { margin: 20px 0 0; font: 400 15px/1.5 var(--font-ui); color: var(--bone-3); }
+.crowd b { color: var(--nerve); font-weight: 600; }
+.footer-source { color: var(--bone-4); }

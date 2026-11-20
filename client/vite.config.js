@@ -11,8 +11,9 @@ export default defineConfig(({ mode }) => ({
   // its own folder, so publishing never overwrites the laptop build that npm run site serves
   build: { outDir: mode === 'pages' ? 'dist-pages' : 'dist' },
   plugins: [react(), mode === 'pages' && githubPages()],
-  server: { port: 5180, strictPort: true },
-  preview: { port: 5181, strictPort: true },
+  // /api goes to the Unmasked API (server/, Express on PostgreSQL), in development and in npm run site
+  server: { port: 5180, strictPort: true, proxy: { '/api': 'http://localhost:4100' } },
+  preview: { port: 5181, strictPort: true, proxy: { '/api': 'http://localhost:4100' } },
 }))
 
 // GitHub Pages serves 404.html for any unknown address, so a copy of the app there makes links like

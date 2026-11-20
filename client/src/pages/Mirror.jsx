@@ -7,9 +7,10 @@ import Scanner from '../effects/Scanner'
 import PhotoPlate from '../components/PhotoPlate'
 import Headline from '../components/Headline'
 import { UNITS, toUnits, matchScore } from '../data/mirror'
-import { SCENARIOS, METRICS, SECONDS, BLINKS_TALKING, EXAMPLE } from '../data/rehearse'
+import { SECONDS, BLINKS_TALKING, EXAMPLE } from '../data/rehearse'
 import { summarize } from '../lib/rehearse'
-import { useData } from '../i18n/data'
+import { useData, useRehearseContent } from '../i18n/data'
+import { api } from '../lib/api'
 import { useT } from '../i18n'
 import { createTracker, drawMesh } from '../lib/faceTracker'
 import { useStored, useTitle } from '../lib/hooks'
@@ -235,6 +236,8 @@ function Intro({ onStart, onDemo }) {
 
 function Rehearse({ units, found, live, demo }) {
   const t = useT()
+  const { SCENARIOS } = useRehearseContent()
+  const [saved, setSaved] = useState(null) // the row the database kept, with the previous try next to it
   const [phase, setPhase] = useState('pick') // pick · countdown · recording · report
   const [sc, setSc] = useState(SCENARIOS[0].id)
   const [count, setCount] = useState(3)
@@ -275,8 +278,14 @@ function Rehearse({ units, found, live, demo }) {
       clearInterval(sample)
       const r = summarize(samples.current, elapsed)
       setResult(r)
+      setSaved(null)
       setHistory((h) => [{ sc, at: Date.now(), ...r, timeline: undefined }, ...h].slice(0, 20))
       setPhase('report')
+      api.saveRehearsal({
+        scenario: sc, lang: t.lang, seconds: Math.min(120, Math.max(0.1, Math.round(elapsed * 10) / 10)),
+        faceShare: r.faceShare, blinksPerMin: r.blinksPerMin, smiles: r.smiles, smilesEyes: r.smilesEyes, presses: r.presses,
+        browUp: r.browUp, browDown: r.browDown, still: r.still, tilt: r.tilt,
+      }).then((row) => row && setSaved(row))
     }
     stopRef.current = () => finish((performance.now() - t0) / 1000)
     return () => clearInterval(sample)
@@ -328,10 +337,15 @@ function Rehearse({ units, found, live, demo }) {
     )
   }
 
-  const before = history.filter((h) => h.sc === sc)[1]
+  // the previous try at this situation: from the database when it answered, else from this browser
+  const fromDb = saved && saved.attempt_number > 1 && {
+    blinksPerMin: saved.prev_blinks_per_min, smiles: saved.prev_smiles, presses: saved.prev_presses,
+    browUp: saved.prev_brow_up, still: saved.prev_still, tilt: saved.prev_tilt,
+  }
+  const before = saved ? fromDb || undefined : history.filter((h) => h.sc === sc)[1]
   return (
     <div className="rehearse">
-      <Report result={result} previous={before} />
+      <Report result={result} previous={before} saved={saved} />
       <div className="qcard-next">
         <button className="btn btn-light cursor-target" onClick={() => setPhase('countdown')}>{t(['Try again', 'دووبارە هەوڵ بدەرەوە'])}</button>
         <button className="btn btn-ghost cursor-target" onClick={() => setPhase('pick')}>{t(['Another situation', 'دۆخێکی تر'])}</button>
@@ -340,9 +354,10 @@ function Rehearse({ units, found, live, demo }) {
   )
 }
 
-function Report({ result: r, previous, example = false }) {
+function Report({ result: r, previous, example = false, saved = null }) {
   const t = useT()
   const { STRENGTH } = useData()
+  const { METRICS } = useRehearseContent()
   if (r.faceShare < 50) {
     return (
       <div className="report">
@@ -378,7 +393,11 @@ function Report({ result: r, previous, example = false }) {
           </li>
         ))}
       </ul>
-      <p className="perform-state ui">{t(['Nothing was recorded: no video and no sound. Only these numbers are kept, in this browser, so you can compare your next try.', 'هیچ شتێک تۆمار نەکرا: نە ڤیدیۆ و نە دەنگ. تەنها ئەم ژمارانە دەمێننەوە، لەم وێبگەڕەدا، بۆ ئەوەی هەوڵی داهاتووت بەراورد بکەیت.'])}</p>
+      {saved ? (
+        <p className="perform-state ui">{t([`Nothing was recorded: no video and no sound. Only these numbers were saved, in the database, as try ${saved.attempt_number} at this situation.`, `هیچ شتێک تۆمار نەکرا: نە ڤیدیۆ و نە دەنگ. تەنها ئەم ژمارانە پاشەکەوت کران، لە داتابەیسەکەدا، وەک هەوڵی ${t.n(saved.attempt_number)} بۆ ئەم دۆخە.`])}</p>
+      ) : (
+        <p className="perform-state ui">{t(['Nothing was recorded: no video and no sound. Only these numbers are kept, in this browser, so you can compare your next try.', 'هیچ شتێک تۆمار نەکرا: نە ڤیدیۆ و نە دەنگ. تەنها ئەم ژمارانە دەمێننەوە، لەم وێبگەڕەدا، بۆ ئەوەی هەوڵی داهاتووت بەراورد بکەیت.'])}</p>
+      )}
     </div>
   )
 }

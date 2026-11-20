@@ -2,12 +2,15 @@
   "name": "unmasked",
   "version": "0.1.0",
   "private": true,
-  "description": "Unmasked: the psychology of the human body. Front end (client/).",
+  "description": "Unmasked: the psychology of the human body. Website (client/) and Express + PostgreSQL API (server/).",
   "scripts": {
-    "dev": "npm --prefix client run dev",
+    "dev": "node scripts/run.mjs dev",
     "build": "npm --prefix client run build",
-    "site": "npm --prefix client run build && npm --prefix client run preview",
-    "site:open": "npm --prefix client run build && npm --prefix client run preview -- --open",
+    "site": "node scripts/run.mjs site",
+    "site:open": "node scripts/run.mjs site --open",
+    "db:reset": "npm --prefix server run db:reset",
+    "db:seed:build": "npm --prefix server run db:seed:build",
+    "test": "npm --prefix server test",
     "deploy:pages": "node scripts/deploy-pages.mjs"
   }
 }

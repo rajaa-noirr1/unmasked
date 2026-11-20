@@ -1,12 +1,14 @@
 // One test, one question at a time. At the end: the score, and every face or body you misread,
 // with what you chose and what it was.
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import QuestionCard from '../components/QuestionCard'
 import LightRays from '../effects/LightRays'
 import { useData } from '../i18n/data'
 import { useT } from '../i18n'
 import { useStored, useTitle } from '../lib/hooks'
+import { api } from '../lib/api'
+import { shuffledOrder, inOrder } from '../lib/shuffle'
 import NotFound from './NotFound'
 
 export default function TestPlayer() {
@@ -19,7 +21,17 @@ export default function TestPlayer() {
   const [answers, setAnswers] = useState({})
   const [best, setBest] = useStored('best', {})
   const nextRef = useRef(null)
-  useEffect(() => { setAt(0); setAnswers({}) }, [id])
+  // with the API: one attempt in the database per run through the test, started at the first answer
+  const attemptRef = useRef(null)
+  const [crowd, setCrowd] = useState({}) // question id → how everyone answered it
+  // the options in a new random order for every run through the test (answers keep their own positions)
+  const [round, setRound] = useState(0)
+  const itemKey = test ? test.items.map((it) => `${it.id}:${it.options.length}`).join(',') : ''
+  const orders = useMemo(() => Object.fromEntries((test?.items || []).map((it) => [it.id, shuffledOrder(it.options.length)])),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [id, round, itemKey])
+  const restart = () => { attemptRef.current = null; setCrowd({}); setRound((r) => r + 1) }
+  useEffect(() => { setAt(0); setAnswers({}); restart() }, [id])
   // after an answer, keyboard focus moves to Next, but the page stays where it is: the reader scrolls
   const answeredNow = test ? answers[test.items[Math.min(at, test.items.length - 1)].id] : null
   useEffect(() => { if (answeredNow != null) nextRef.current?.focus({ preventScroll: true }) }, [answeredNow])
@@ -31,7 +43,12 @@ export default function TestPlayer() {
   const choice = answers[item.id]
   const score = items.filter((it) => answers[it.id] === it.answerIndex).length
 
-  const answer = (opt) => setAnswers((a) => ({ ...a, [item.id]: opt }))
+  const answer = (opt) => {
+    setAnswers((a) => ({ ...a, [item.id]: opt }))
+    const qid = item.id
+    attemptRef.current ||= api.startAttempt(test.id, t.lang)
+    attemptRef.current.then((a) => a && api.answer(a.id, qid, opt + 1)).then((r) => r && setCrowd((c) => ({ ...c, [qid]: r.picks })))
+  }
   const next = () => {
     const n = at + 1
     setAt(n)
@@ -60,7 +77,10 @@ export default function TestPlayer() {
         </div>
 
         {!done ? (
-          <QuestionCard key={item.id} item={item} kind={test.kind} answered={choice} choice={choice} onAnswer={answer}>
+          <QuestionCard key={item.id} item={inOrder(item, orders[item.id])} kind={test.kind}
+            answered={choice == null ? null : (orders[item.id] || []).indexOf(choice)} choice={choice == null ? null : (orders[item.id] || []).indexOf(choice)}
+            onAnswer={(shown) => answer(orders[item.id] ? orders[item.id][shown] : shown)}>
+            <Crowd picks={crowd[item.id]} />
             <div className="qcard-next">
               <button ref={nextRef} className="btn btn-light cursor-target" onClick={next}>
                 {at + 1 < items.length ? t(['Next', 'دواتر']) : t(['See how you read', 'ببینە چۆنت خوێندەوە'])}
@@ -69,10 +89,26 @@ export default function TestPlayer() {
             </div>
           </QuestionCard>
         ) : (
-          <Summary test={test} tests={TESTS} answers={answers} score={score} again={() => { setAnswers({}); setAt(0) }} />
+          <Summary test={test} tests={TESTS} answers={answers} score={score} again={() => { setAnswers({}); setAt(0); restart() }} />
         )}
       </div>
     </div>
+  )
+}
+
+// How everyone who took the test answered this question (from the database's option_picks view)
+function Crowd({ picks }) {
+  const t = useT()
+  if (!picks) return null
+  const total = picks.reduce((n, p) => n + p.picks, 0)
+  const right = picks.find((p) => p.is_correct)
+  if (total < 2) return <p className="crowd ui">{t(['You are the first to answer this one.', 'تۆ یەکەم کەسیت کە وەڵامی ئەمە دەداتەوە.'])}</p>
+  return (
+    <p className="crowd ui">
+      {t([`Of ${total} answers so far, `, `لە ${t.n(total)} وەڵامی تا ئێستا، `])}
+      <b>{t.lang === 'ckb' ? `٪${t.n(right?.percent ?? 0)}` : `${right?.percent ?? 0}%`}</b>
+      {t([' got this one right.', ' ڕاست بوون.'])}
+    </p>
   )
 }
 
