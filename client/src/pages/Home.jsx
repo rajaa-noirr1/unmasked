@@ -8,6 +8,7 @@ import Silhouette from '../components/Silhouette'
 import Photo from '../components/Photo'
 import { scenePhoto } from '../data/photos'
 import QuestionCard from '../components/QuestionCard'
+import { shuffledOrder, inOrder } from '../lib/shuffle'
 import { ScrollLight } from '../components/Text'
 import FuzzyText from '../effects/FuzzyText'
 import SideRays from '../effects/SideRays'
@@ -63,7 +64,9 @@ function TryOne() {
   const t = useT()
   const { TESTS } = useData()
   const item = TESTS[0].items[0]
-  const [choice, setChoice] = useState(null)
+  const [choice, setChoice] = useState(null) // the position in the content, not on screen
+  const [order, setOrder] = useState(() => shuffledOrder(item.options.length))
+  const shown = choice == null ? null : order.indexOf(choice)
   return (
     <section className="try wrap">
       <header className="section-head rv">
@@ -71,10 +74,10 @@ function TryOne() {
         <p className="lede">{t(['Four words that sound almost the same. One face, and only its eyes. Choose, and the frame will widen to show you the rest.', 'چوار وشە کە نزیکەی وەک یەک دەنگ دەدەنەوە. یەک دەموچاو، و تەنها چاوەکانی. هەڵبژێرە، و چوارچێوەکە فراوان دەبێت تا ئەوەی ماوە پیشانت بدات.'])}</p>
       </header>
       <div className="rv">
-        <QuestionCard item={item} kind="eyes" answered={choice} choice={choice} onAnswer={setChoice}>
+        <QuestionCard item={inOrder(item, order)} kind="eyes" answered={shown} choice={shown} onAnswer={(i) => setChoice(order[i])}>
           <div className="qcard-next">
             <Link to="/train/eyes" className="btn btn-light cursor-target">{t(['Read all twelve faces', 'هەر دوازدە دەموچاوەکە بخوێنەوە'])}</Link>
-            <button className="link-line ui" onClick={() => setChoice(null)}>{t(['Try it again', 'دووبارە هەوڵ بدەرەوە'])}</button>
+            <button className="link-line ui" onClick={() => { setChoice(null); setOrder(shuffledOrder(item.options.length)) }}>{t(['Try it again', 'دووبارە هەوڵ بدەرەوە'])}</button>
           </div>
         </QuestionCard>
       </div>

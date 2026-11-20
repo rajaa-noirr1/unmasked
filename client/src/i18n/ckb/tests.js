@@ -5,7 +5,7 @@ const BODY_Q = 'ئەم جەستەیە چی دەڵێت؟'
 const NOT_ENOUGH = 'زانیاری بەس نییە'
 
 // the credit line under each photo (edit with data/photos.js)
-export const STILLS = 'وێنەیەک لە زنجیرەی Hannibal (NBC، ٢٠١٣–٢٠١٥)، بۆ مەبەستی فێرکردن بەکارهاتووە.'
+export const STILLS = 'وێنەیەک لە فیلمێک، موڵکی خاوەنەکانیەتی، بۆ مەبەستی فێرکردن بەکارهاتووە.'
 
 export const TESTS = {
   eyes: {

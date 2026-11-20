@@ -1,5 +1,7 @@
 # Photos for the tests
 
+**The full checklist, one card per photo with a box to tick, is in `docs/photo-requests.pdf` (and `docs/photo-requests.md`).**
+
 Put the photos in these three folders, named exactly as below (lower case). JPG is best; PNG and WebP work too. Aim for at least 1200 px wide. Every photo in every test comes from these folders, and the same files also appear on the Train page, the home page and the How page.
 
 ```
