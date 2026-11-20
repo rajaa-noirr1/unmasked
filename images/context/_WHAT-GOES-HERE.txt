@@ -1,0 +1,10 @@
+Context test: 8 photos showing the WHOLE scene. Keep the posture alike across 1-3, 4-5 and 6-7. Full details in ../SHOT-LIST.md
+
+cold.jpg           arms crossed tightly against the cold, outdoors in winter, alone
+argument.jpg       the same crossed arms, face to face in an argument, other person visible
+lecture.jpg        crossed arms, seated in a lecture or audience, facing a speaker
+stadium.jpg        both hands on the head in a stadium crowd after a near miss
+desk.jpg           both hands on the head, alone at a desk late at night, one lamp
+protest.jpg        a raised fist in a march, others around doing the same
+win.jpg            a raised fist right after winning, people cheering
+hand-on-heart.jpg  right hand on the heart with a slight bow, greeting an older person
