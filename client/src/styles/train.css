@@ -1,0 +1,52 @@
+/* ── train your eye ── */
+.train, .player { position: relative; padding-bottom: 120px; overflow: hidden; }
+.train-rays { position: absolute; inset: 0 0 auto 0; height: 110vh; pointer-events: none; opacity: 0.9; mask-image: linear-gradient(#000 40%, transparent); }
+.train-rays.dim { opacity: 0.45; }
+.train-head { margin-bottom: clamp(56px, 7vw, 100px); }
+
+.chambers { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.chamber { position: relative; display: flex; flex-direction: column; border-radius: 20px; padding: 22px; background: linear-gradient(180deg, rgba(239, 230, 220, 0.035), rgba(239, 230, 220, 0.01)); box-shadow: inset 0 0 0 1px var(--line); transition: box-shadow 0.4s var(--ease), transform 0.5s var(--ease), background 0.4s; overflow: hidden; }
+.chamber:hover { box-shadow: inset 0 0 0 1px rgba(240, 194, 90, 0.45), 0 30px 80px -40px rgba(240, 194, 90, 0.35); transform: translateY(-4px); }
+.chamber-visual { position: relative; height: 300px; border-radius: 12px; overflow: hidden; background: #070405; }
+.chamber-eyes .chamber-visual { display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 18px; }
+.chamber-eyes .eyestrip { flex: none; transition: transform 0.6s var(--ease), opacity 0.6s; }
+.chamber-eyes .stack-0 { transform: translateX(-6%) scale(0.92); opacity: 0.55; }
+.chamber-eyes .stack-2 { transform: translateX(6%) scale(0.92); opacity: 0.55; }
+.chamber:hover .stack-0, .chamber:hover .stack-2 { transform: none; opacity: 0.85; }
+.chamber-visual.duo, .chamber-visual.trio { display: grid; gap: 2px; }
+.chamber-visual.duo { grid-template-columns: 1fr 1fr; }
+.chamber-visual.trio { grid-template-columns: 1fr 1fr 1fr; }
+.chamber-visual .silhouette { height: 100%; aspect-ratio: auto; border-radius: 0; box-shadow: none; }
+.chamber-copy { padding: 26px 8px 8px; display: flex; flex-direction: column; flex: 1; }
+.chamber-kicker { font: 560 13px/1 var(--font-ui); font-stretch: 115%; letter-spacing: 0.06em; color: var(--nerve); }
+.chamber-title { font-size: clamp(36px, 3.4vw, 54px); font-style: italic; margin: 14px 0 14px; }
+.chamber-copy p { color: var(--bone-2); max-width: 46ch; }
+.chamber-foot { display: flex; justify-content: space-between; margin-top: auto; padding-top: 18px; font: 500 14px/1 var(--font-ui); color: var(--bone-3); }
+.chamber-best { color: var(--nerve); }
+.chamber-mirror { justify-content: flex-end; background: radial-gradient(80% 90% at 85% 10%, rgba(91, 124, 240, 0.16), transparent 70%), linear-gradient(180deg, rgba(239, 230, 220, 0.03), rgba(239, 230, 220, 0.01)); min-height: 320px; }
+@media (max-width: 900px) { .chambers { grid-template-columns: 1fr; } }
+
+/* ── the player ── */
+.player-bar { position: relative; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin: 6px 0 clamp(36px, 5vw, 64px); }
+.player-name { font-size: 26px; font-style: italic; color: var(--bone-2); }
+.pips { list-style: none; display: flex; gap: 6px; margin: 0 0 0 auto; padding: 0; }
+.pips li { width: 22px; height: 4px; border-radius: 2px; background: var(--line-2); transition: background 0.3s, box-shadow 0.3s; }
+.pips li.now { background: var(--bone); }
+.pips li.yes { background: var(--nerve); box-shadow: 0 0 10px rgba(240, 194, 90, 0.6); }
+.pips li.no { background: var(--artery); }
+.player .qcard { position: relative; }
+.player-context .qcard-visual { max-width: 520px; }
+
+/* ── the summary ── */
+.summary { position: relative; max-width: 980px; }
+.summary-score { display: flex; align-items: baseline; gap: 16px; }
+.summary-score span { font-size: clamp(110px, 16vw, 220px); font-style: italic; line-height: 0.85; color: var(--nerve); letter-spacing: -0.05em; }
+.summary-score small { font: 400 24px/1 var(--font-ui); color: var(--bone-3); }
+.summary-verdict { font-size: clamp(30px, 3.2vw, 46px); margin: 24px 0 36px; max-width: 24ch; }
+.missed { list-style: none; margin: 0 0 40px; padding: 0; border-top: 1px solid var(--line); }
+.missed li { display: grid; grid-template-columns: 220px 200px minmax(0, 1fr); gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.missed-chose, .missed-was { font: 400 15px/1.3 var(--font-ui); color: var(--bone-3); }
+.missed-chose b { color: var(--artery); font-weight: 560; }
+.missed-was b { color: var(--nerve); font-weight: 560; }
+.missed-cue { color: var(--bone-2); font-size: 16px; }
+@media (max-width: 860px) { .missed li { grid-template-columns: 1fr; gap: 6px; } }

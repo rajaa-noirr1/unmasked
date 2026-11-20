@@ -1,0 +1,57 @@
+/* ── the map ── */
+.map-page { position: relative; min-height: 100vh; overflow: hidden; }
+.map-fibers { position: absolute; inset: 0; opacity: 0.4; pointer-events: none; mask-image: radial-gradient(70% 70% at 50% 50%, #000 30%, transparent 85%); }
+.map-grid { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(250px, 0.8fr) minmax(0, 1.25fr) minmax(320px, 1fr); gap: 32px; min-height: 100vh; padding: 110px var(--gutter) 40px; max-width: 1680px; margin: 0 auto; align-items: stretch; }
+
+.map-rail { padding-top: 24px; }
+.map-title { font-size: clamp(60px, 7.4vw, 124px); font-style: italic; }
+.map-lede { margin: 18px 0 30px; color: var(--bone-2); max-width: 30ch; }
+.feelings { display: flex; flex-wrap: wrap; gap: 8px; }
+.feeling { height: 38px; padding: 0 16px; border-radius: 999px; font: 520 14.5px/1 var(--font-ui); color: var(--bone-2); box-shadow: inset 0 0 0 1px var(--line); transition: all 0.25s var(--ease); }
+.feeling:hover { color: var(--bone); box-shadow: inset 0 0 0 1px var(--line-2); }
+.feeling.on { color: var(--void); background: linear-gradient(120deg, var(--artery), var(--nerve)); box-shadow: 0 0 24px rgba(226, 67, 79, 0.35); }
+.feel-key { margin-top: 28px; min-height: 140px; }
+.feel-note { font: italic 400 21px/1.35 var(--font-display); color: var(--bone); max-width: 26ch; }
+.feel-legend { display: flex; align-items: center; gap: 8px; font: 400 14px/1 var(--font-ui); color: var(--bone-3); margin-top: 14px; }
+.lg-hot, .lg-cold { width: 14px; height: 6px; border-radius: 3px; display: inline-block; }
+.lg-hot { background: linear-gradient(90deg, var(--artery), var(--nerve)); }
+.lg-cold { background: var(--vein); margin-inline-start: 10px; }
+.feel-source { margin-top: 14px; font: 400 14px/1.45 var(--font-ui); color: var(--bone-4); max-width: 34ch; }
+
+.map-stage { position: relative; min-height: 620px; display: flex; flex-direction: column; }
+.map-stage .particle-body { flex: 1; width: 100%; min-height: 560px; }
+.map-hover { position: absolute; top: 18px; left: 50%; transform: translate(-50%, 6px); font: italic 400 22px/1 var(--font-display); color: var(--nerve); opacity: 0; transition: opacity 0.25s, transform 0.3s var(--ease); pointer-events: none; white-space: nowrap; }
+.map-hover.show { opacity: 1; transform: translate(-50%, 0); }
+.map-parts { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; padding: 12px 0 0; }
+.map-part { font: 500 14px/1 var(--font-ui); font-stretch: 112%; color: var(--bone-4); padding: 8px 2px; transition: color 0.2s; }
+.map-part:hover { color: var(--bone-2); }
+.map-part.on { color: var(--nerve); }
+
+.map-panel { padding-top: 24px; max-height: calc(100vh - 140px); overflow-y: auto; scrollbar-width: thin; }
+.map-empty { padding-top: 20px; }
+.map-empty-title { font-size: 34px; font-style: italic; color: var(--bone-2); margin-bottom: 14px; }
+.region { animation: rise 0.6s var(--ease) both; }
+.region-parts { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
+.region-parts .chip { height: 32px; font-size: 14px; }
+.region-name { font-size: clamp(40px, 3.6vw, 60px); font-style: italic; }
+.region-line { margin: 10px 0 26px; color: var(--bone-2); font-size: 18px; }
+.region-h { font: 560 13px/1 var(--font-ui); font-stretch: 115%; letter-spacing: 0.06em; color: var(--nerve); margin: 26px 0 12px; }
+.signals { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.signal { padding: 16px 18px; border-radius: 14px; background: rgba(239, 230, 220, 0.03); box-shadow: inset 0 0 0 1px var(--line); }
+.signal-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.signal-tell { font: 500 19px/1.25 var(--font-display); color: var(--bone); }
+.signal-means { margin: 8px 0 6px; color: var(--bone-2); font-size: 16.5px; }
+.signal-context { margin: 0; color: var(--bone-3); font-size: 15.5px; }
+.signal-context .ui { font: 600 11.5px/1 var(--font-ui); letter-spacing: 0.06em; color: var(--artery); margin-inline-end: 8px; }
+.signal-weak { background: rgba(226, 67, 79, 0.04); }
+.signal-weak .signal-tell { text-decoration: line-through; text-decoration-color: rgba(226, 67, 79, 0.6); text-decoration-thickness: 1px; }
+.region-feels { color: var(--bone-2); font-size: 17px; }
+.region-link { display: inline-block; margin-top: 18px; }
+.map-narrow-note { padding-bottom: 40px; font: 400 14px var(--font-ui); }
+
+@media (max-width: 1100px) {
+  .map-grid { grid-template-columns: 1fr; padding-top: 96px; }
+  .map-stage { min-height: 70vh; }
+  .map-stage .particle-body { min-height: 62vh; }
+  .map-panel { max-height: none; }
+}

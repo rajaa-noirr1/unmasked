@@ -1,0 +1,100 @@
+/* ── patterns: the plates ── */
+.patterns { padding-bottom: 0; }
+.patterns-head { margin-bottom: clamp(40px, 6vw, 76px); }
+.patterns-hint { display: block; margin-top: 22px; font: 500 14px/1 var(--font-ui); font-stretch: 112%; letter-spacing: 0.03em; color: var(--bone-4); }
+.plates { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 1.7vw, 26px); }
+.plate-card { aspect-ratio: 0.6; }
+.plate-card .tilted-card { --tc-rim-color: rgba(239, 230, 220, 0.1); --tc-shadow-color: rgba(0, 0, 0, 0.85); }
+.plate-inner { position: absolute; inset: 0; display: flex; flex-direction: column; background: radial-gradient(90% 50% at 50% 100%, color-mix(in srgb, var(--ink) 7%, transparent), transparent 70%), #0a0607; }
+.plate-inner::after { content: ''; position: absolute; inset: 9px; border-radius: 9px; box-shadow: inset 0 0 0 1px rgba(239, 230, 220, 0.07); pointer-events: none; }
+.plate-inner .silhouette { flex: 1; min-height: 0; width: 100%; aspect-ratio: auto; border-radius: 0; box-shadow: none; background: radial-gradient(60% 50% at 50% 40%, color-mix(in srgb, var(--light) 10%, transparent), transparent 72%); }
+.plate-meta { padding: 0 22px 24px; min-height: 156px; }
+.plate-no { font: 600 11px/1 var(--font-ui); font-stretch: 115%; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); }
+.plate-name { font-size: clamp(24px, 2.1vw, 32px); font-style: italic; margin: 10px 0 6px; }
+.plate-line { margin: 0; font-size: 15px; line-height: 1.4; color: var(--bone-3); }
+
+/* ── the dossier ── */
+.dossier { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: clamp(10px, 3vw, 40px); background: rgba(5, 3, 4, 0.84); backdrop-filter: blur(10px); animation: veil-in 0.4s var(--ease) both; }
+@keyframes veil-in { from { opacity: 0; } }
+.dossier-sheet { position: relative; width: min(1180px, 100%); height: min(820px, 100%); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); border-radius: 18px; overflow: hidden; background: #0b0809; box-shadow: inset 0 0 0 1px var(--line-2), 0 40px 120px rgba(0, 0, 0, 0.7), 0 0 140px color-mix(in srgb, var(--ink) 14%, transparent); animation: lid-open 0.9s var(--ease) both; transition: box-shadow 0.6s var(--ease); }
+@keyframes lid-open { from { clip-path: inset(50% 0 50% 0 round 18px); } to { clip-path: inset(0 0 0 0 round 18px); } }
+.dossier-figure { position: relative; background: #070405; animation: veil-in 0.8s var(--ease) both; }
+.dossier-figure .silhouette { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; box-shadow: none; }
+.dossier-no { position: absolute; left: 26px; top: 24px; font: 600 12px/1 var(--font-ui); font-stretch: 115%; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); }
+.dossier-text { overflow-y: auto; overscroll-behavior: contain; padding: clamp(26px, 3.4vw, 50px); }
+.dossier-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.dossier-name { font-size: clamp(40px, 4.4vw, 68px); font-style: italic; animation: rise 0.7s var(--ease) both; }
+.dossier-close { width: 46px; height: 46px; flex: none; display: grid; place-items: center; border-radius: 50%; box-shadow: inset 0 0 0 1px var(--line-2); transition: box-shadow 0.3s, background 0.3s; }
+.dossier-close:hover { background: rgba(239, 230, 220, 0.05); box-shadow: inset 0 0 0 1px var(--bone-2); }
+.dossier-close svg { width: 18px; height: 18px; fill: none; stroke: var(--bone); stroke-width: 1.6; stroke-linecap: round; }
+.dossier-line { margin: 10px 0 30px; font: italic 400 21px/1.35 var(--font-display); color: var(--ink); }
+.dossier-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 36px; animation: rise 0.8s var(--ease) 0.08s both; }
+.dossier-field p { margin: 0; font-size: 16.5px; line-height: 1.55; color: var(--bone-2); }
+.dossier-field ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.dossier-field li { position: relative; padding-left: 18px; font-size: 16px; line-height: 1.45; color: var(--bone-2); }
+.dossier-field li::before { content: ''; position: absolute; left: 0; top: 0.68em; width: 8px; height: 1px; background: var(--ink); }
+.dossier-closer { margin: 34px 0 0; padding: 4px 0 4px 20px; border-left: 1.5px solid var(--ink); font: italic 400 18.5px/1.5 var(--font-display); color: var(--bone); }
+.dossier-nav { display: flex; justify-content: space-between; gap: 16px; margin-top: 34px; padding-top: 20px; border-top: 1px solid var(--line); }
+.dossier-nav button { display: flex; flex-direction: column; gap: 6px; font: italic 400 20px/1.1 var(--font-display); color: var(--bone-2); text-align: left; transition: color 0.25s; }
+.dossier-nav button:last-child { text-align: right; align-items: flex-end; }
+.dossier-nav button:hover { color: var(--bone); }
+.dossier-nav .ui { font: 600 12px/1 var(--font-ui); font-style: normal; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bone-4); }
+
+/* ── dark words ── */
+.dark-words { position: relative; isolation: isolate; overflow: hidden; overflow: clip; margin-top: clamp(100px, 13vw, 180px); padding: clamp(110px, 12vw, 170px) 0 clamp(100px, 12vw, 160px); }
+.dark-veil { position: absolute; inset: 0; z-index: -2; opacity: 0.9; }
+.dark-words::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, var(--void) 0%, rgba(11, 8, 9, 0.2) 22%, rgba(11, 8, 9, 0.25) 75%, var(--void) 100%); }
+.dw-kicker { display: block; margin-bottom: 20px; font: 600 13px/1 var(--font-ui); font-stretch: 115%; letter-spacing: 0.14em; text-transform: uppercase; color: var(--artery); }
+.dw-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
+.dw-index { display: grid; gap: 30px; }
+.dw-group-name { margin: 0 0 8px; font: 600 12px/1 var(--font-ui); font-stretch: 115%; letter-spacing: 0.14em; text-transform: uppercase; color: var(--artery); }
+.dw-group ul { list-style: none; margin: 0; padding: 0; display: grid; }
+.dw-word { display: flex; align-items: baseline; gap: 14px; width: 100%; padding: 6px 0; text-align: left; font: italic 400 clamp(20px, 1.8vw, 26px)/1.15 var(--font-display); color: var(--bone-4); transition: color 0.3s, transform 0.5s var(--ease); }
+.dw-word:hover { color: var(--bone-2); }
+.dw-word.on { color: var(--bone); transform: translateX(12px); }
+.dw-n { font: 600 12px/1 var(--font-ui); font-style: normal; color: var(--bone-4); transition: color 0.3s; }
+.dw-word.on .dw-n { color: var(--artery); }
+.dw-stage { position: sticky; top: 100px; }
+.dw-panel-top { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 14px; font: 600 12px/1 var(--font-ui); font-stretch: 115%; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bone-4); }
+.dw-panel-top span:first-child { color: var(--artery); }
+.dw-step { display: flex; justify-content: space-between; gap: 16px; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line); }
+.dw-step button { display: flex; flex-direction: column; gap: 6px; font: italic 400 19px/1.1 var(--font-display); color: var(--bone-2); text-align: left; transition: color 0.25s; }
+.dw-step button:last-child { align-items: flex-end; text-align: right; }
+.dw-step button:hover { color: var(--bone); }
+.dw-step .ui { font: 600 12px/1 var(--font-ui); font-style: normal; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bone-4); }
+.dw-panel { padding: clamp(24px, 3vw, 44px); border-radius: 20px; background: rgba(11, 8, 9, 0.66); backdrop-filter: blur(16px); box-shadow: inset 0 0 0 1px var(--line-2), 0 30px 90px rgba(0, 0, 0, 0.45); }
+.dw-panel { animation: rise 0.6s var(--ease) both; }
+.dw-fuzzy { margin: -6px 0 24px -4px; max-width: 100%; overflow: hidden; }
+.dw-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 34px; }
+.dw-wide { grid-column: 1 / -1; }
+.dw-field p { margin: 0; font-size: 16.5px; line-height: 1.6; color: var(--bone-2); }
+.dw-useful { padding-top: 22px; border-top: 1px solid var(--line); }
+.dw-useful p { color: var(--bone); font-size: 18px; font-style: italic; font-family: var(--font-display); }
+.dw-note { margin-top: 44px; max-width: 64ch; font-size: 15px; line-height: 1.6; color: var(--bone-3); }
+.dw-note a { color: var(--bone); text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 1000px) {
+  .plates { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dw-grid { grid-template-columns: 1fr; gap: 22px; }
+  .dw-index { display: flex; gap: 26px; overflow-x: auto; scrollbar-width: none; padding: 4px var(--gutter) 10px; margin: 0 calc(var(--gutter) * -1); mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent); }
+  .dw-index::-webkit-scrollbar { display: none; }
+  .dw-group { flex: none; display: flex; align-items: baseline; gap: 16px; }
+  .dw-group-name { margin: 0; white-space: nowrap; }
+  .dw-group ul { display: flex; gap: 18px; }
+  .dw-word { width: auto; white-space: nowrap; font-size: 21px; }
+  .dw-word.on { transform: none; }
+  .dw-stage { position: static; }
+}
+@media (max-width: 760px) {
+  .dossier { padding: 0; }
+  .dossier-sheet { height: 100%; border-radius: 0; grid-template-columns: 1fr; grid-template-rows: 30vh minmax(0, 1fr); }
+  @keyframes lid-open { from { clip-path: inset(50% 0 50% 0); } to { clip-path: inset(0); } }
+  .dossier-grid, .dw-fields { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .plate-meta { padding: 0 14px 16px; min-height: 122px; }
+  .plate-name { font-size: 21px; margin-top: 8px; }
+  .plate-line { font-size: 13.5px; }
+  .plate-no { font-size: 10px; }
+  .plate-card { aspect-ratio: 0.55; }
+}

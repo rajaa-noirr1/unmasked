@@ -1,0 +1,12 @@
+Body test: 10 photos, full body or knees up. Faces small, turned away or in shadow is best (they get blurred anyway). Full details in ../SHOT-LIST.md
+
+confident.jpg      upright but loose, shoulders back and down, chin level, hands still
+defensive.jpg      arms folded high and tight, torso turned away from someone
+defeated.jpg       collapsed forward, shoulders rolled in, head hanging, arms limp
+anxious.jpg        a hand at the neck, face or other arm, shoulders raised
+dominant.jpg       wide stance, hands on hips or a desk, standing over someone
+threatening.jpg    very close to someone else, squared up, still
+withdrawn.jpg      small, arms around itself, turned away from others
+controlled.jpg     very upright and still, hands clasped behind or in front
+head-in-hands.jpg  head in both hands; the reason clear only from the whole scene
+steeple.jpg        seated, fingertips pressed together

@@ -1,0 +1,78 @@
+/* ── hero ── */
+.hero-brain { position: absolute; inset: 0; inset-inline-start: 47%; z-index: 1; }
+.hero::before { content: ''; position: absolute; inset-inline-end: 4%; top: 10%; width: min(62vw, 980px); aspect-ratio: 1; pointer-events: none; background: radial-gradient(closest-side, rgba(150, 120, 255, 0.11), rgba(240, 194, 90, 0.05) 48%, transparent 72%); opacity: 0; animation: fade-in 3s var(--ease) 0.6s forwards; }
+.brain-readout { position: absolute; z-index: 2; inset-inline-end: var(--gutter); bottom: clamp(28px, 7vh, 72px); max-width: 360px; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; text-align: end; pointer-events: none; opacity: 0; animation: fade-in 1.4s var(--ease) 2.4s forwards; }
+.brain-readout-name { font-size: clamp(26px, 2.3vw, 36px); font-style: italic; line-height: 1.05; color: var(--bone-2); transition: color 0.4s var(--ease); }
+.brain-readout.on .brain-readout-name { color: var(--nerve); text-shadow: 0 0 24px rgba(240, 194, 90, 0.35); }
+.brain-readout-what { font-size: 16.5px; line-height: 1.45; color: var(--bone-2); }
+.hero { position: relative; height: 100vh; min-height: 640px; overflow: hidden; }
+.hero-copy { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 120px var(--gutter) 80px; max-width: 860px; pointer-events: none; }
+@media (min-width: 1000px) { .hero-title .hl-line { white-space: nowrap; } }
+.hero-copy a, .hero-copy button { pointer-events: auto; }
+.hero-title { font-size: clamp(52px, 6.4vw, 116px); font-style: italic; font-weight: 300; line-height: 0.92; letter-spacing: -0.035em; }
+.hero-lede { margin-top: 30px; opacity: 0; animation: fade-in 1.4s var(--ease) 1s forwards; max-width: 40ch; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; opacity: 0; animation: fade-in 1.4s var(--ease) 1.25s forwards; }
+@keyframes fade-in { to { opacity: 1; } }
+.hero-hint { position: absolute; z-index: 2; left: var(--gutter); bottom: 32px; font: 400 14px/1 var(--font-ui); font-stretch: 112%; letter-spacing: 0.03em; color: var(--bone-4); opacity: 0; animation: fade-in 1.4s var(--ease) 2.2s forwards; }
+@media (max-width: 900px) {
+  .hero { height: auto; min-height: 100svh; }
+  .hero-copy { justify-content: flex-start; padding-top: 110px; padding-bottom: 52vh; }
+  .hero-hint { display: none; }
+  .hero-brain { inset: auto 0 0 0; height: 60%; }
+  .hero::before { inset-inline-end: -20%; top: auto; bottom: 0; width: 120vw; height: 120vw; }
+  .brain-readout { inset-inline: var(--gutter); bottom: 16px; max-width: none; text-align: center; align-items: center; }
+}
+
+/* ── try one ── */
+.try { padding-top: clamp(80px, 12vw, 180px); padding-bottom: clamp(60px, 8vw, 120px); }
+
+/* ── three rooms ── */
+.rooms { padding-top: clamp(60px, 8vw, 120px); padding-bottom: clamp(60px, 8vw, 120px); }
+.room { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 80px); align-items: center; padding: clamp(36px, 5vw, 72px) 0; border-top: 1px solid var(--line); }
+.room:last-child { border-bottom: 1px solid var(--line); }
+.room-visual { position: relative; aspect-ratio: 1 / 1.05; border-radius: 10px; overflow: hidden; background: radial-gradient(60% 55% at 50% 45%, rgba(240, 194, 90, 0.07), transparent 70%), var(--void-2); box-shadow: inset 0 0 0 1px var(--line); }
+.room-visual .particle-body { width: 100%; height: 100%; }
+.room-visual .plate2 { position: absolute; inset: 0; display: grid; place-items: center; }
+.room-visual .plate2 svg { width: 100%; height: 100%; }
+.room-mirror .room-visual::after { content: ''; position: absolute; inset: auto 0 0; height: 38%; pointer-events: none; background: linear-gradient(180deg, transparent, rgba(11, 8, 9, 0.92)); }
+.room-mirror .room-units { z-index: 1; }
+.room-visual .silhouette { position: absolute; inset: 0; height: 100%; aspect-ratio: auto; border-radius: 0; box-shadow: none; }
+.room-caption { position: absolute; inset-inline-start: 22px; bottom: 20px; display: flex; align-items: center; gap: 10px; font: 400 14px/1 var(--font-ui); color: var(--bone-3); }
+.room-caption b { font-weight: 560; color: var(--bone); }
+.hot-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--artery); box-shadow: 0 0 14px var(--artery); }
+.room-units { position: absolute; inset-inline-start: 22px; bottom: 18px; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font: 400 14px/1 var(--font-ui); color: var(--bone-3); }
+.room-units b { color: var(--nerve); font-weight: 600; margin-inline-end: 6px; }
+.room-no { font: 560 14px/1 var(--font-ui); font-stretch: 115%; letter-spacing: 0.06em; color: var(--nerve); }
+.room-title { font-size: clamp(32px, 3.4vw, 52px); margin: 18px 0 20px; }
+.room-copy p { color: var(--bone-2); max-width: 46ch; }
+.room-copy .link-line { display: inline-block; margin-top: 10px; }
+.room:hover .room-title { color: #fff; }
+.room-mirror .room-copy { order: 0; }
+@media (max-width: 900px) {
+  .room { grid-template-columns: 1fr; }
+  .room-mirror .room-visual { order: -1; }
+}
+
+/* ── dark words teaser ── */
+.dark-teaser { position: relative; padding: clamp(100px, 14vw, 200px) 0; overflow: hidden; border-top: 1px solid var(--line); }
+.dark-rays { position: absolute; inset: 0; opacity: 0.9; }
+.dark-teaser-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.dark-word { min-height: 160px; display: flex; align-items: center; }
+.dark-word canvas { max-width: 100%; height: auto !important; }
+.dark-copy p { color: var(--bone-2); margin: 18px 0 28px; max-width: 40ch; }
+@media (max-width: 900px) { .dark-teaser-grid { grid-template-columns: 1fr; } }
+
+/* ── manifesto ── */
+.manifesto { padding-top: clamp(100px, 14vw, 200px); padding-bottom: clamp(100px, 12vw, 180px); }
+.manifesto-text { font-size: clamp(30px, 3.8vw, 58px); line-height: 1.16; letter-spacing: -0.02em; font-weight: 300; max-width: 22em; }
+.manifesto-rules { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: clamp(56px, 7vw, 96px); border-top: 1px solid var(--line); }
+.rule { padding: 28px 28px 0 0; }
+.rule + .rule { padding-inline-start: 28px; border-inline-start: 1px solid var(--line); }
+.rule h3 { font-size: 34px; font-style: italic; color: var(--nerve); }
+.rule p { margin-top: 10px; color: var(--bone-2); font-size: 17px; }
+.manifesto-link { display: inline-block; margin-top: 48px; }
+@media (max-width: 760px) { .manifesto-rules { grid-template-columns: 1fr; } .rule + .rule { border-inline-start: 0; padding-inline-start: 0; border-top: 1px solid var(--line); } }
+
+/* Kurdish runs wider than English at the same size */
+html[lang='ckb'] .hero-title { font-size: clamp(42px, 5vw, 92px); line-height: 1.4; }
+html[lang='ckb'] .hero-copy { max-width: 720px; }
