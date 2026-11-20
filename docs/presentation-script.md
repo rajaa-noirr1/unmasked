@@ -13,7 +13,7 @@ Lines in **[brackets]** are actions, not words. Everything after `>` is what you
 | # | Part | Slide | Time | Clock |
 |---|---|---|---|---|
 | 1 | The hook | A glowing iris | 1:00 | 0:00 |
-| 2 | The name | A mask coming apart, your names | 0:30 | 1:00 |
+| 2 | The name | Hannibal's face, your names | 0:30 | 1:00 |
 | 3 | The problem | Three myths, struck out | 1:00 | 1:30 |
 | 4 | The three rules | Context, clusters, baseline | 0:50 | 2:30 |
 | 5 | Three ways in | Three emblems | 0:30 | 3:20 |
@@ -65,7 +65,7 @@ Let the picture settle before you speak.
 
 > This is Unmasked. **[pause]**
 
-> Look at the picture. On the left, neat lines: the face we show people. On the right, the same lines coming apart. That is what this project is about: what is under the mask.
+> Look at this face. Calm, polite, almost smiling. And still, something in it tells you to be careful. **[pause]** That is what this project is about: what a face gives away, even when it is trying not to.
 
 > Unmasked is a website about reading the human body. Faces, eyes, hands, shoulders, feet. Not to judge people, and not to catch liars. To read them carefully: what a signal usually means, what else it could mean, and what to check before you believe it.
 
