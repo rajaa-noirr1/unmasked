@@ -1,6 +1,7 @@
-// Builds the Unmasked database from scratch: the website's own database user, the database, the schema
-// and the seed. Run: npm run db:reset   (reads server/.env; everything in the unmasked database is replaced,
-// including visitors' rehearsals and test answers)
+// Builds the Unmasked database from scratch: the website's own database user, the database, the schema,
+// the admin tables and the seed. Run: npm run db:reset   (reads server/.env; everything in the unmasked
+// database is replaced, including visitors' rehearsals, test answers, admins and what admins added.
+// Add an admin again afterwards with npm run admin:create.)
 import { readFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -31,11 +32,11 @@ await admin.query(`CREATE DATABASE ${ident(PGDATABASE)} OWNER ${ident(PGUSER)} E
 await admin.end()
 console.log(`database "${PGDATABASE}" created, owned by "${PGUSER}"`)
 
-// 2. As the website's user: the schema, then the seed, each in one transaction.
+// 2. As the website's user: the schema, the admin side, then the seed, each in one transaction.
 const db = new pg.Client({ host: PGHOST, port: +PGPORT, user: PGUSER, password: PGPASSWORD, database: PGDATABASE })
 await db.connect()
 await db.query('SET search_path = public')
-for (const file of ['schema.sql', 'seed.sql']) {
+for (const file of ['schema.sql', 'admin.sql', 'seed.sql']) {
   const sql = readFileSync(join(here, '..', 'db', file), 'utf8')
   await db.query('BEGIN')
   try { await db.query(sql); await db.query('COMMIT') } catch (e) { await db.query('ROLLBACK'); throw new Error(`${file}: ${e.message}`) }
@@ -45,3 +46,4 @@ const counts = await db.query('SELECT * FROM content_counts')
 const tables = await db.query("SELECT count(*)::int AS n FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE'")
 console.log(`${tables.rows[0].n} tables; rows:`, counts.rows[0])
 await db.end()
+console.log('No admins yet: add one with  npm run admin:create')

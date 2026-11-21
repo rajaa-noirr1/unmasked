@@ -103,7 +103,7 @@ function Figure({ pose, x = 0, scale = 1, flip = false, tone = 'var(--sil)', rim
   )
 }
 
-const SCENES = {
+export const SCENES = {
   none: { light: '#f0c25a', tint: 0.5 },
   cold: { light: '#7fa2ff', tint: 0.7 },
   argument: { light: '#e2434f', tint: 0.75 },

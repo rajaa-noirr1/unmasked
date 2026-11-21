@@ -14,10 +14,13 @@ You need Node 18 or newer and PostgreSQL 17 (already installed on this laptop, w
 npm --prefix client install
 npm --prefix server install
 npm run db:reset
+npm run admin:create
 npm run dev
 ```
 
-The first three are only needed once. `npm run db:reset` builds the database: it creates the website's own database user (`unmasked_app`) and the `unmasked` database, then runs `server/db/schema.sql` and `server/db/seed.sql`. It asks for the PostgreSQL superuser (`postgres`) password the first time, unless you put it in `server/.env` as `POSTGRES_PASSWORD=...`. Run it again any time for a clean database (it also wipes saved rehearsals and test answers).
+The first four are only needed once. `npm run db:reset` builds the database: it creates the website's own database user (`unmasked_app`) and the `unmasked` database, then runs `server/db/schema.sql`, `server/db/admin.sql` and `server/db/seed.sql`. It asks for the PostgreSQL superuser (`postgres`) password the first time, unless you put it in `server/.env` as `POSTGRES_PASSWORD=...`. Run it again any time for a clean database (it also wipes saved rehearsals, test answers, admins and anything added from the admin page).
+
+`npm run admin:create` adds an admin who can sign in at http://localhost:5180/admin (see [The admin page](#the-admin-page)).
 
 `npm run dev` starts the API (http://localhost:4100) and the website (http://localhost:5180, the editing server: changes show up instantly) together.
 
@@ -25,7 +28,7 @@ To host the finished site on this computer, double-click **Start Unmasked.bat** 
 
 If PowerShell says "running scripts is disabled on this system", use `npm.cmd` instead of `npm` (for example `npm.cmd run site`), or just use the .bat file.
 
-`npm test` checks the API on the real database: the content it serves must be identical to the site's own, and the constraints and triggers must refuse bad data.
+`npm test` checks the API on the real database: the content it serves must be identical to the site's own, the constraints and triggers must refuse bad data, and the admin side must stay closed without a sign-in and keep the site's content in step with every change. It cleans up after itself.
 
 To update the online version after a change, commit it, then run `npm run deploy:pages`. It builds the site for GitHub Pages (served from `/unmasked/`, into `client/dist-pages`) and pushes that build to the `gh-pages` branch; the site updates within a minute or two. The online version has no API: it shows the built-in copy of the content and keeps rehearsals and scores in the browser.
 
@@ -39,14 +42,17 @@ To update the online version after a change, commit it, then run `npm run deploy
 | Train your eye | `/train`, `/train/:id` | Three tests: eyes (a strip of eyes from a photo, which widens after the answer), body (photos with the face hidden until the answer) and context (one silhouette pose in different scenes). Every answer explains itself |
 | Patterns | `/patterns` | Hidden for now (`SHOW_PATTERNS` in `client/src/config.js`). Sixteen behaviour patterns and 25 *Dark words*; the code is all still there |
 | How to read a body | `/how` | Context, clusters and baseline; claims nobody can back up; sources and credits |
+| Admin | `/admin` | Sign in, then add, change, reorder or delete questions, Map signals, Rehearse situations and Poker face lines, in both languages. A small link in the footer leads here |
 
 ## Structure
 
 ```
 server/
   db/           schema.sql (tables, triggers, views) and seed.sql (generated: do not edit by hand)
-  src/          the API: app.js (routes), content.js (the content queries), db.js
-  scripts/      db-reset.mjs, build-seed.mjs
+  db/admin.sql  the admin side, in its own schema: accounts, sign-ins, uploaded photos, the change log
+  src/          the API: app.js (routes), admin.js (the admin routes), auth.js (passwords, sessions),
+                content.js (the content queries), db.js
+  scripts/      db-reset.mjs, build-seed.mjs, admin-create.mjs
   test/         end-to-end tests on the real database
 client/src/
   pages/        one file per route
@@ -68,7 +74,26 @@ PostgreSQL 17, plain SQL, no ORM: `server/db/schema.sql` (31 tables, triggers an
 - **Rules in the database.** CHECK constraints (a rehearsal cannot have more eye-reaching smiles than smiles), a trigger that refuses an answer from the wrong question or test, a trigger that closes an attempt when its last question is answered, and views the site reads: `attempt_scores`, `question_stats`, `option_picks` (how everyone answered) and `rehearsal_progress` (each rehearsal next to the one before, with a window function).
 - **Where the content comes from.** The site's content files (`client/src/data/`, Kurdish in `client/src/i18n/ckb/`) are the source the seed is built from: after changing them, run `npm run db:seed:build`, then `npm run db:reset`.
 
-The API (`server/src/app.js`): `GET /api/content` (everything the pages show, both languages), `POST /api/rehearsals`, `GET /api/rehearsals?visitor=…`, `POST /api/attempts`, `POST /api/attempts/:id/answers`, `GET /api/attempts/:id`, `GET /api/stats/questions`, `GET /api/health`.
+The API (`server/src/app.js`): `GET /api/content` (everything the pages show, both languages), `POST /api/rehearsals`, `GET /api/rehearsals?visitor=…`, `POST /api/attempts`, `POST /api/attempts/:id/answers`, `GET /api/attempts/:id`, `GET /api/stats/questions`, `GET /api/photos/:id.jpg`, `GET /api/health`. The admin routes (`server/src/admin.js`) are under `/api/admin`: `login`, `logout`, `me`, `overview`, and for each kind of content a list, add (`POST`), edit (`PUT`), delete and `move`.
+
+## The admin page
+
+For adding things after the site is built (another test question, a signal on the Map, a new Rehearse situation) without touching the code.
+
+1. Make an account, once: `npm run admin:create` asks for a username and a password (10 characters or more; it is shown as stars and only its hash is stored). Run it again with the same name to change a password. `npm run admin:create -- --list` lists the admins; `npm run admin:create -- --remove <name>` removes one.
+2. Run the site (`npm run dev` or Start Unmasked.bat) and open `/admin`, or follow **Admin** in the footer. Sign in.
+3. Four tabs:
+   - **Overview**: what is in the database, what visitors have done, the hardest questions (from `question_stats`) and the latest changes, with who made them.
+   - **The tests**: every question of the three tests in order. Add one, edit it, move it up or down, or delete it. A question has its photo (upload one, which is stored in the database, or name a file in `client/public/images/`), the eye-strip frame or the face blur, 2 to 6 options with the right one ticked, the heading, *Look at* and *Why not the others*. For the context test, a pose and a scene are drawn until a photo exists.
+   - **The Map**: each part of the body. Edit its words, and add, edit, reorder or delete its signals, each with how well the research supports it.
+   - **The Mirror**: the Rehearse situations and the Poker face lines.
+4. Every text has an English box and a Kurdish box side by side. English is required; an empty Kurdish box shows the English until someone translates it.
+
+Changes show on the site at once: the API clears its content cache after every change and the open pages read the database again. Deleting a question also deletes the answers people gave to it; deleting a situation deletes its saved rehearsals (the page says how many first). A test keeps at least one question, Rehearse at least one situation.
+
+How it is kept safe: the admin tables live in their own schema (`admin`), apart from the 31 tables the site reads. Passwords are stored as scrypt hashes with their own salt. Signing in gives the browser a random token in an HttpOnly, SameSite=Strict cookie that lasts eight hours; the database keeps only its SHA-256, so reading the table does not let anyone sign in. Five wrong passwords from one address wait five minutes. Writes from another site are refused, and every change is written to `admin.changes`. The online version (GitHub Pages) has no API, so there the page only explains this.
+
+One thing to remember: `npm run db:reset` rebuilds everything from the site's built-in content, so it removes what was added from the admin page (and the admins). Back up first if you need to keep it, for example with pgAdmin (right-click the `unmasked` database, Backup).
 
 Translations: page text sits beside its English as a pair, `t(['English', 'کوردی'])`. The longer content is translated in `client/src/i18n/ckb/` by id. Test answers are stored as the position of the right option, so they stay correct in both languages.
 

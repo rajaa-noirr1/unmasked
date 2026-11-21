@@ -93,15 +93,20 @@ function fromDatabase(langs) {
 
 const ContentContext = createContext(null)
 
+// After an admin changes something, the pages read the database again (see pages/Admin.jsx).
+export const refreshContent = () => window.dispatchEvent(new Event('unmasked:content'))
+
 export function ContentProvider({ children }) {
   const [remote, setRemote] = useState(null)
   useEffect(() => {
     let alive = true
-    api.content().then((res) => {
+    const load = () => api.content().then((res) => {
       if (!alive || !res?.langs?.en) return
       try { setRemote(fromDatabase(res.langs)) } catch (e) { console.warn('Content from the database did not fit:', e) }
     })
-    return () => { alive = false }
+    load()
+    window.addEventListener('unmasked:content', load)
+    return () => { alive = false; window.removeEventListener('unmasked:content', load) }
   }, [])
   return createElement(ContentContext.Provider, { value: remote }, children)
 }

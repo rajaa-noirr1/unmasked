@@ -111,3 +111,11 @@ export async function loadContent() {
   }
   return langs
 }
+
+// Read once and kept, until an admin changes something (clearContent) or the API restarts.
+let cache = null
+export function cachedContent() {
+  cache ||= loadContent().catch((e) => { cache = null; throw e })
+  return cache
+}
+export const clearContent = () => { cache = null }

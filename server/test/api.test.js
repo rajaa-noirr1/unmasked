@@ -1,4 +1,4 @@
-// End-to-end tests of the API on the real database. Run: npm test (after npm run db:reset).
+// End-to-end tests of the API on the real database. Run: npm test (after npm run db:reset; the test files run one after another).
 // They create visitors with random ids and delete them at the end (their rehearsals and answers go too).
 import { test, before, after } from 'node:test'
 import assert from 'node:assert/strict'

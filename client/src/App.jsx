@@ -11,6 +11,7 @@ import Train from './pages/Train'
 import TestPlayer from './pages/TestPlayer'
 import Patterns from './pages/Patterns'
 import How from './pages/How'
+import Admin from './pages/Admin'
 import NotFound from './pages/NotFound'
 import { SHOW_PATTERNS } from './config'
 
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="/train/:id" element={<TestPlayer />} />
           {SHOW_PATTERNS && <Route path="/patterns" element={<Patterns />} />}
           <Route path="/how" element={<How />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

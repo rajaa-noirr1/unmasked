@@ -9,6 +9,7 @@
     "site": "node scripts/run.mjs site",
     "site:open": "node scripts/run.mjs site --open",
     "db:reset": "npm --prefix server run db:reset",
+    "admin:create": "npm --prefix server run admin:create",
     "db:seed:build": "npm --prefix server run db:seed:build",
     "test": "npm --prefix server test",
     "deploy:pages": "node scripts/deploy-pages.mjs"

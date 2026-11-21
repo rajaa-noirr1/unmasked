@@ -7,43 +7,48 @@
 //   POST /api/attempts/:id/answers       answer one question; returns whether it was right and how others answered
 //   GET  /api/attempts/:id               an attempt's score
 //   GET  /api/stats/questions?test=…     how everyone did on each question
+//   GET  /api/photos/7.jpg               a photo uploaded from the admin page (kept in the database)
+//   /api/admin/…                         the admin side: sign in, then change the content (admin.js)
 // Visitors have no accounts: the browser sends a random id it keeps (a UUID). No names, no pictures.
 import express from 'express'
 import { q, rows, one, tx } from './db.js'
-import { loadContent } from './content.js'
+import { cachedContent, clearContent } from './content.js'
+import { BadRequest, int, route } from './http.js'
+import { admin } from './admin.js'
 
 export const app = express()
 app.use(express.json({ limit: '50kb' }))
 
 // ── small helpers ──
-class BadRequest extends Error { constructor(msg) { super(msg); this.status = 400 } }
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 const visitorId = (v) => { if (typeof v !== 'string' || !UUID.test(v)) throw new BadRequest('visitor must be a UUID'); return v.toLowerCase() }
 const lang = (v) => (v === 'ckb' ? 'ckb' : 'en')
-const int = (v, name, lo, hi) => {
-  const n = Number(v)
-  if (!Number.isInteger(n) || n < lo || n > hi) throw new BadRequest(`${name} must be a whole number from ${lo} to ${hi}`)
-  return n
-}
-const route = (fn) => (req, res, next) => fn(req, res).catch(next)
 
 // Every write first makes sure the visitor exists (and was seen now).
 const VISIT = `INSERT INTO visitors (id, lang) VALUES ($1, $2)
                ON CONFLICT (id) DO UPDATE SET last_seen = now(), lang = EXCLUDED.lang`
 
 // ── content ──
-let cache = null
 app.get('/api/health', route(async (_req, res) => {
   res.json({ ok: true, database: (await one('SELECT current_database() AS name')).name, counts: await one('SELECT * FROM content_counts') })
 }))
 
 app.get('/api/content', route(async (_req, res) => {
-  cache ||= loadContent()   // read once; after npm run db:reset, restart the API or POST /api/content/refresh
-  try {
-    res.json({ source: 'database', langs: await cache })
-  } catch (e) { cache = null; throw e }
+  // read once and kept; an admin's change clears it. After npm run db:reset, restart the API or POST /api/content/refresh
+  res.json({ source: 'database', langs: await cachedContent() })
 }))
-app.post('/api/content/refresh', route(async (_req, res) => { cache = null; res.json({ ok: true }) }))
+app.post('/api/content/refresh', route(async (_req, res) => { clearContent(); res.json({ ok: true }) }))
+
+// A photo uploaded from the admin page for a new question. It never changes, so browsers may keep it.
+app.get('/api/photos/:file', route(async (req, res) => {
+  const m = /^(\d{1,9})\.(jpg|png|webp)$/.exec(req.params.file)
+  const photo = m && await one('SELECT mime, bytes FROM admin.photos WHERE id = $1', [Number(m[1])])
+  if (!photo) return res.status(404).json({ error: 'no such photo' })
+  res.set('Cache-Control', 'public, max-age=31536000, immutable').type(photo.mime).send(photo.bytes)
+}))
+
+// ── the admin side ──
+app.use('/api/admin', admin)
 
 // ── rehearsals ──
 const REHEARSAL_COLS = `id, scenario, recorded_at, seconds, face_share, blinks_per_min, smiles, smiles_eyes, presses,
@@ -124,9 +129,14 @@ app.get('/api/stats/questions', route(async (req, res) => {
 // ── errors ──
 app.use('/api', (_req, res) => res.status(404).json({ error: 'no such address' }))
 app.use((err, _req, res, _next) => {
-  // 23514: a CHECK or a trigger refused it; 23503: it points at something that does not exist
-  if (err.status === 400 || err.code === '23514' || err.code === '23503' || err.code === '22P02') {
+  // 23514: a CHECK or a trigger refused it; 23503: it points at something that does not exist;
+  // 23505: something with that id or position is already there
+  if (err.code === '23514' || err.code === '23503' || err.code === '23505' || err.code === '22P02') {
     return res.status(400).json({ error: err.message })
+  }
+  // our own refusals (400, 404) and the body parser's (a body too large, JSON that does not parse)
+  if (err.status >= 400 && err.status < 500) {
+    return res.status(err.status).json({ error: err.expose === false ? 'bad request' : err.message })
   }
   console.error(err)
   res.status(500).json({ error: 'Something went wrong on the server.' })
