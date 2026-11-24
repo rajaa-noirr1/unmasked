@@ -1,4 +1,4 @@
-// Turns 45 seconds of muscle readings (ten samples a second) into a Rehearse report.
+// Turns a rehearsal's muscle readings (ten samples a second, 10 seconds by default) into a Rehearse report.
 // Each sample: { u: { au: level }, roll: degrees, face: boolean, blinks: count since the start }.
 const ON = 0.32
 const MOVING = [1, 2, 4, 5, 6, 7, 9, 12, 14, 15, 17, 20, 24, 26]

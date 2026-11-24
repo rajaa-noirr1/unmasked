@@ -1,8 +1,8 @@
-// Rehearse: talk to the camera for 45 seconds, as if to a real person, and see what your face gave
-// away: the cues someone across the table could read. Cues, not verdicts, and never feelings.
+// Rehearse: talk to the camera for 10 seconds, as if to a real person, and see what your face gave
+// away: the cues someone across the table could read, and how you might come across (lib/readings.js).
 // Shaped like future tables: scenarios, metrics, and (in the browser for now) attempts.
 
-export const SECONDS = 45
+export const SECONDS = 10
 
 // blinks a minute during conversation (Bentivoglio and colleagues, 1997: about 26 talking, 17 at rest)
 export const BLINKS_TALKING = 26
@@ -48,11 +48,11 @@ export const EXAMPLE = (() => {
   const timeline = []
   for (let i = 0; i < 150; i++) {
     const tt = i / 150
-    const smile = Math.max(0, Math.sin(tt * 19) * 0.7 - 0.2) * (tt > 0.15 && tt < 0.85 ? 1 : 0.4)
-    const brow = Math.max(0, Math.sin(tt * 31 + 1) * 0.6 - 0.15)
-    const press = (i > 22 && i < 28) || (i > 64 && i < 69) || (i > 101 && i < 105) || (i > 131 && i < 136) ? 1 : 0
-    const blink = i % 11 === 3 || i % 17 === 9 ? 1 : 0
+    const smile = Math.max(0, Math.sin(tt * 9.4 - 0.6) * 0.8 - 0.25)
+    const brow = Math.max(0, Math.sin(tt * 14 + 1) * 0.6 - 0.15)
+    const press = (i > 40 && i < 48) || (i > 112 && i < 120) ? 1 : 0
+    const blink = i % 30 === 7 || i === 71 ? 1 : 0
     timeline.push([smile, brow, press, blink])
   }
-  return { faceShare: 100, blinksPerMin: 31, smiles: 4, smilesEyes: 1, presses: 4, browUp: 22, browDown: 9, still: 48, tilt: 12, timeline }
+  return { faceShare: 100, blinksPerMin: 31, smiles: 2, smilesEyes: 1, presses: 2, browUp: 22, browDown: 9, still: 48, tilt: 12, timeline }
 })()
