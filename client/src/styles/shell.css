@@ -50,14 +50,6 @@
 @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr; gap: 32px; } }
 
 /* ── the blink between pages ── */
-.lids { position: fixed; inset: 0; z-index: 200; pointer-events: none; }
-.lid { position: absolute; left: -10vw; right: -10vw; height: 62vh; background: #050304; transition: transform 0.33s var(--ease-in); }
-.lid-top { top: 0; border-radius: 0 0 50% 50% / 0 0 16vh 16vh; transform: translateY(-104%); }
-.lid-bottom { bottom: 0; border-radius: 50% 50% 0 0 / 16vh 16vh 0 0; transform: translateY(104%); }
-.lid-top .lash { position: absolute; left: 0; right: 0; bottom: 0; height: 26px; border-radius: inherit; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9); }
-.lids-closing .lid { transform: translateY(0); }
-.lids-opening .lid { transition: transform 0.52s var(--ease); }
-.lids-closing .lid-top { box-shadow: 0 0 60px rgba(0, 0, 0, 0.8); }
 
 /* ── film grain over everything ── */
 .grain { position: fixed; inset: 0; z-index: 90; pointer-events: none; }

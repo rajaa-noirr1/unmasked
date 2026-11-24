@@ -99,35 +99,3 @@ export function Footer() {
   )
 }
 
-// Between pages the whole screen blinks: the lids close, the page changes behind them, they open.
-// Returns the location to render (it lags behind the real one while the lids are shut) and the phase.
-export function useBlink(location) {
-  const [shown, setShown] = useState(location)
-  const [phase, setPhase] = useState('open')
-  useEffect(() => {
-    if (location.pathname === shown.pathname) {
-      if (location !== shown) setShown(location)
-      return
-    }
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setShown(location)
-      window.scrollTo(0, 0)
-      return
-    }
-    setPhase('closing')
-    const t1 = setTimeout(() => { setShown(location); window.scrollTo(0, 0); setPhase('opening') }, 330)
-    const t2 = setTimeout(() => setPhase('open'), 860)
-    return () => { clearTimeout(t1); clearTimeout(t2) }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location])
-  return [shown, phase]
-}
-
-export function Lids({ phase }) {
-  return (
-    <div className={`lids lids-${phase}`} aria-hidden="true">
-      <div className="lid lid-top"><span className="lash" /></div>
-      <div className="lid lid-bottom" />
-    </div>
-  )
-}

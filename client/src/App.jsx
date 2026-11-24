@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router'
-import { Nav, Footer, Lids, useBlink } from './components/Shell'
+import { Nav, Footer } from './components/Shell'
 import TargetCursor from './effects/TargetCursor'
 import Noise from './effects/Noise'
 import { watchInteractive } from './lib/attention'
@@ -17,22 +17,23 @@ import { SHOW_PATTERNS } from './config'
 
 export default function App() {
   const location = useLocation()
-  const [shown, phase] = useBlink(location)
   useEffect(() => watchInteractive(), [])
 
-  // a link to an id on another page (like /patterns#dark-words) scrolls there once the page is shown
+  // a new page starts at the top, straight away: no transition, so it never looks like a reload
+  useEffect(() => { window.scrollTo(0, 0) }, [location.pathname])
+  // a link to an id on another page (like /how#sources) scrolls there once the page is shown
   useEffect(() => {
-    if (!shown.hash) return
-    const t = setTimeout(() => document.getElementById(shown.hash.slice(1))?.scrollIntoView({ behavior: 'smooth' }), 700)
+    if (!location.hash) return
+    const t = setTimeout(() => document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: 'smooth' }), 150)
     return () => clearTimeout(t)
-  }, [shown])
+  }, [location])
 
   return (
     <>
       <a className="skip" href="#main">Skip to content</a>
       <Nav />
       <main id="main">
-        <Routes location={shown}>
+        <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/map" element={<MapPage />} />
           <Route path="/mirror" element={<Mirror />} />
@@ -45,7 +46,6 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
-      <Lids phase={phase} />
       <div className="grain"><Noise opacity={0.07} fps={18} blendMode="overlay" contrast={0.7} fixed /></div>
       <TargetCursor targetSelector=".cursor-target" cursorColor="#efe6dc" cursorColorOnTarget="#f0c25a" size={30} cornerSize={9} thickness={1.5} dotSize={4} showLabel={false} blendMode="normal" />
     </>
