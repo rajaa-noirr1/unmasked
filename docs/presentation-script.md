@@ -15,16 +15,16 @@ Every slide moves: its background is drawn live, and the drawings on it turn, pu
 | # | Part | Speaker | Slide | Time | Clock |
 |---|---|---|---|---|---|
 | 1 | The opening | 1 | A mask of light coming apart in a room of moving light, your names | 1:00 | 0:00 |
-| 2 | Not another management system | 1 | A library, a restaurant, a bookstore, and a table of live data | 0:45 | 1:00 |
-| 3 | Why it matters to you | 1 | A figure with no face, eyes all around it | 0:45 | 1:45 |
+| 2 | The body, as data | 1 | A landscape of data points rolling in waves, and the numbers | 0:45 | 1:00 |
+| 3 | Why it matters to you | 1 | A figure with no face, signals rippling out of it | 0:45 | 1:45 |
 | 4 | The problem | 1 | Three myths, struck out | 0:50 | 2:30 |
 | 5 | The three rules | 1 | Context, clusters, baseline | 0:45 | 3:20 |
-| 6 | Three ways in | 1, then 2 | Three moving emblems; hand over | 0:20 | 4:05 |
+| 6 | Three ways in | 1, then 2 | Three moving emblems, each in a shaft of light; hand over | 0:20 | 4:05 |
 | 7 | **Live demo** | 2 | “Live”, and five stops with their times | 3:30 | 4:25 |
 | 8 | How it’s built | 3 | On paper: lens, browser, server, database | 0:50 | 7:55 |
 | 9 | The database | 3 | On paper: twelve tables with their keys | 1:05 | 8:45 |
 | 10 | What comes next | 3 | Now, spring, then smart glasses | 1:15 | 9:50 |
-| 11 | Close | 3 | An eye of light opening | 0:30 | 11:05 |
+| 11 | Close | 3 | The Unmasked logo: the mask lifts off the eye | 0:30 | 11:05 |
 | | Questions | all three | | 3:25 | 11:35 |
 
 **If you run long:** in the demo, skip the tests (stop 4) and stop the rehearsal after ten seconds. Slide 8 can be said in 30 seconds.
@@ -60,23 +60,25 @@ Screen: a mask drawn in lines of light, coming apart into dust, and your three n
 
 > We are Hogr, Hunar and Nigar. **[click]**
 
-## Slide 2 — Not another management system (0:45)
+## Slide 2 — The body, as data (0:45)
 
-Screen: three grey cards (a library, a restaurant, a bookstore) with rows of names and numbers, an arrow, and a glowing gold table of live data from Unmasked, a light running down its rows.
+Screen: a landscape of data, a field of points rolling in slow waves, with pulses of light spreading through it; on the left: 13 parts of the body, 36 signals, 15 muscles, 30 questions.
 
-> When people hear “database project”, they think of a library system. A restaurant system. A bookstore. **[Point at the grey cards.]** Those matter, but a database is not only for storing names and numbers.
+> Every real website has a database behind it. Without one, a site is like a PDF: it cannot learn anything, compare anything, or show you your progress. **[pause]**
 
-> Every real website has a database behind it. Without one, a site is like a PDF: it cannot learn anything, compare anything, or show you your progress.
+> So we built ours around something alive: the human body. Every signal of every part of the body, every muscle the camera reads, every answer to a test, and every rehearsal becomes a row of data.
 
-> **[Point at the gold table.]** So we took the database somewhere alive: the psychology of the human body. Every signal of every part of the body, every muscle the camera reads, every test answer, every rehearsal someone does, is a row. That is Unmasked. **[click]**
+> **[Point at the numbers.]** Thirteen parts of the body, thirty-six signals, fifteen muscles, thirty questions.
+
+> **[Last line.]** And because it is all data, Unmasked can learn, compare, and show you your progress. That is Unmasked. **[click]**
 
 ## Slide 3 — Why it matters to you (0:45)
 
-Screen: a figure with no face in the middle, eight eyes around it looking in; three situations; two lines on what Unmasked gives you.
+Screen: a figure with no face, rings of signal rippling out of it and small lights circling it; three situations; two lines on what Unmasked gives you.
 
 > Why should this matter to you? **[pause]**
 
-> Remember: everyone in this room can see your face, except you. **[Point at the eyes around the figure.]**
+> Remember: everyone in this room can see your face, except you. **[Point at the figure.]** It is giving signals all the time, and you are the only one who cannot see them.
 
 > After university, every one of us will sit in job interviews, give presentations, have hard conversations. Plenty of smart people lose there, not because of what they say, but because of habits they never knew they had: looking away, pressing their lips, blinking fast.
 
@@ -112,7 +114,7 @@ Sources, if asked: Mehrabian (1971); Bond and DePaulo (2006); Ranehill and colle
 
 ## Slide 6 — Three ways in (0:20)
 
-Screen: three moving emblems: the Map, the Mirror, Train your eye.
+Screen: three moving emblems, each in its own shaft of light: the Map, the Mirror, Train your eye.
 
 > We built these three rules into a website with three rooms. **[pause]**
 
@@ -210,9 +212,9 @@ Screen: a line with three stages (now, spring, then), and smart glasses drawn in
 
 ## Slide 11 — Close (0:30)
 
-Screen: an eye drawn in lines of light, like the mask on the first slide, opening; then the closing words and your names.
+Screen: the Unmasked logo, large: the right half of the mask lifts off the gold eye, then breathes, over the same moving lines of light as the first slide; then the closing words and your names.
 
-Slow down for the last slide. Let the eye open before you speak.
+Slow down for the last slide. Let the mask lift off the eye before you speak.
 
 > We asked you a question at the start. Everyone in this room can see your face, except you. **[pause]**
 
