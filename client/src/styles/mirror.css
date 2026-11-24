@@ -166,3 +166,6 @@ html[lang='ckb'] .mirror-intro .page-title { font-size: clamp(56px, 8.6vw, 140px
 .reading-note { margin: 12px 0 0; font: 400 12.5px/1.45 var(--font-ui); color: var(--bone-4); }
 .is-live .reading-name { font-size: 13px; }
 .is-live .reading-bar { height: 6px; }
+.rehearse-length { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; margin: 4px 0 18px; }
+.rehearse-length > .ui { font: 560 13px/1 var(--font-ui); letter-spacing: 0.06em; text-transform: uppercase; color: var(--bone-3); }
+.rehearse-length .rehearse-scenes { margin: 0; }

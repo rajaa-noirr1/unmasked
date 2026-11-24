@@ -1,13 +1,13 @@
 // The Mirror: everyone around you can see your face, you never can. It shows you what your face gives
 // away, muscle by muscle, so you can see yourself the way other people read you. Never your feelings.
-// Three uses: Rehearse (talk for 10 seconds, get a report of your tells and how you might come across), Poker face (keep them in),
+// Three uses: Rehearse (talk for 10 seconds to 2 minutes, get a report of your tells and how you might come across), Poker face (keep them in),
 // Perform (make an expression on demand and learn the muscles behind it).
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Scanner from '../effects/Scanner'
 import PhotoPlate from '../components/PhotoPlate'
 import Headline from '../components/Headline'
 import { UNITS, toUnits, matchScore } from '../data/mirror'
-import { SECONDS, BLINKS_TALKING, EXAMPLE } from '../data/rehearse'
+import { SECONDS, LENGTHS, BLINKS_TALKING, EXAMPLE } from '../data/rehearse'
 import { summarize } from '../lib/rehearse'
 import { readings, READINGS, CUES } from '../lib/readings'
 import { useData, useRehearseContent } from '../i18n/data'
@@ -196,7 +196,7 @@ export default function Mirror() {
 function Intro({ onStart, onDemo }) {
   const t = useT()
   const uses = [
-    [['Rehearse', 'ڕاهێنان'], [`Before an interview, a presentation or a hard conversation: talk to the camera for ${SECONDS} seconds and get a report of what your face gave away, and how you might come across.`, `پێش چاوپێکەوتنێک، پێشکەشکردنێک یان گفتوگۆیەکی سەخت: ${t.n(SECONDS)} چرکە قسە بۆ کامێراکە بکە و ڕاپۆرتێک وەربگرە لەسەر ئەوەی دەموچاوت ئاشکرای کرد، و چۆن لەوانەیە دەربکەویت.`]],
+    [['Rehearse', 'ڕاهێنان'], ['Before an interview, a presentation or a hard conversation: talk to the camera for 10 seconds to 2 minutes and get a report of what your face gave away, and how you might come across.', `پێش چاوپێکەوتنێک، پێشکەشکردنێک یان گفتوگۆیەکی سەخت: ${t.n(10)} چرکە تا ${t.n(2)} خولەک قسە بۆ کامێراکە بکە و ڕاپۆرتێک وەربگرە لەسەر ئەوەی دەموچاوت ئاشکرای کرد، و چۆن لەوانەیە دەربکەویت.`]],
     [['Poker face', 'دەموچاوی بێهەست'], ['Keep your face still while six lines try to provoke it, and learn which muscle gives you away.', 'دەموچاوت بێجووڵە ڕابگرە لە کاتێکدا شەش ڕستە هەوڵ دەدەن بیوروژێنن، و فێر بە کام ماسولکە ئاشکرات دەکات.']],
     [['Perform', 'دروستکردن'], ['Make an expression on demand and learn the muscles behind it, so you can spot them in other faces.', 'دەربڕینێک بە داواکاری دروست بکە و ماسولکەکانی پشتی فێر بە، بۆ ئەوەی لە دەموچاوی خەڵکی تردا بیانناسیتەوە.']],
   ]
@@ -245,6 +245,8 @@ function Rehearse({ units, found, live, demo }) {
   const [left, setLeft] = useState(SECONDS)
   const [result, setResult] = useState(null)
   const [liveRead, setLiveRead] = useState(null) // the readings so far, while recording
+  const [stored, setLength] = useStored('rehearseSeconds', SECONDS)
+  const length = LENGTHS.includes(stored) ? stored : SECONDS
   const [history, setHistory] = useStored('rehearsals', [])
   const latest = useRef(units)
   latest.current = units
@@ -269,18 +271,18 @@ function Rehearse({ units, found, live, demo }) {
     samples.current = []
     const blinks0 = live.current.blinks
     const t0 = performance.now()
-    setLeft(SECONDS)
+    setLeft(length)
     setLiveRead(null)
     const sample = setInterval(() => {
       samples.current.push({ u: { ...latest.current }, roll: live.current.roll, face: seen.current, blinks: live.current.blinks - blinks0 })
       const elapsed = (performance.now() - t0) / 1000
-      setLeft(Math.max(0, Math.ceil(SECONDS - elapsed)))
+      setLeft(Math.max(0, Math.ceil(length - elapsed)))
       // the readings so far, twice a second, counted over at least five seconds so the first moments do not swing them
       if (samples.current.length % 5 === 0 && elapsed > 1.5) {
         const span = Math.max(elapsed, 5)
         setLiveRead({ ...summarize(samples.current, span), seconds: span })
       }
-      if (elapsed >= SECONDS) finish(elapsed)
+      if (elapsed >= length) finish(elapsed)
     }, 100)
     const finish = (elapsed) => {
       clearInterval(sample)
@@ -303,7 +305,7 @@ function Rehearse({ units, found, live, demo }) {
   if (demo) {
     return (
       <div className="rehearse">
-        <p className="perform-hint">{t([`Pick a situation, talk to the camera for ${SECONDS} seconds as if the person were in front of you, and see what your face gave away, and how you might come across. Rehearsing needs your camera; this is an example of the report you would get.`, `دۆخێک هەڵبژێرە، ${t.n(SECONDS)} چرکە قسە بۆ کامێراکە بکە وەک ئەوەی کەسەکە لەبەردەمتدا بێت، و ببینە دەموچاوت چی ئاشکرا کرد و چۆن لەوانەیە دەربکەویت. ڕاهێنان پێویستی بە کامێراکەتە؛ ئەمە نموونەیەکی ئەو ڕاپۆرتەیە کە وەریدەگریت.`])}</p>
+        <p className="perform-hint">{t(['Pick a situation and how long to talk (10 seconds to 2 minutes), talk to the camera as if the person were in front of you, and see what your face gave away, and how you might come across. Rehearsing needs your camera; this is an example of the report you would get.', `دۆخێک هەڵبژێرە و چەند قسە بکەیت (${t.n(10)} چرکە تا ${t.n(2)} خولەک)، قسە بۆ کامێراکە بکە وەک ئەوەی کەسەکە لەبەردەمتدا بێت، و ببینە دەموچاوت چی ئاشکرا کرد و چۆن لەوانەیە دەربکەویت. ڕاهێنان پێویستی بە کامێراکەتە؛ ئەمە نموونەیەکی ئەو ڕاپۆرتەیە کە وەریدەگریت.`])}</p>
         <Report result={EXAMPLE} example />
       </div>
     )
@@ -313,14 +315,22 @@ function Rehearse({ units, found, live, demo }) {
     return (
       <div className="rehearse">
         <h2 className="display perform-name">{t(['Rehearse.', 'ڕاهێنان.'])}</h2>
-        <p className="perform-hint">{t([`Pick a situation. Then talk to the camera for ${SECONDS} seconds as if the person were in front of you. Afterwards you will see what someone across the table could have read in your face, and how you might have come across.`, `دۆخێک هەڵبژێرە. پاشان ${t.n(SECONDS)} چرکە قسە بۆ کامێراکە بکە وەک ئەوەی کەسەکە لەبەردەمتدا بێت. دواتر دەبینیت کەسێک لە بەرامبەرتەوە دەیتوانی چی لە دەموچاوتدا بخوێنێتەوە، و چۆن لەوانەیە دەرکەوتبیت.`])}</p>
+        <p className="perform-hint">{t(['Pick a situation and how long to talk. Then talk to the camera as if the person were in front of you. Afterwards you will see what someone across the table could have read in your face, and how you might have come across.', 'دۆخێک هەڵبژێرە و چەند قسە بکەیت. پاشان قسە بۆ کامێراکە بکە وەک ئەوەی کەسەکە لەبەردەمتدا بێت. دواتر دەبینیت کەسێک لە بەرامبەرتەوە دەیتوانی چی لە دەموچاوتدا بخوێنێتەوە، و چۆن لەوانەیە دەرکەوتبیت.'])}</p>
         <div className="rehearse-scenes" role="radiogroup" aria-label={t(['Situations', 'دۆخەکان'])}>
           {SCENARIOS.map((s) => (
             <button key={s.id} role="radio" aria-checked={sc === s.id} className={`chip cursor-target ${sc === s.id ? 'on' : ''}`} onClick={() => setSc(s.id)}>{t(s.name)}</button>
           ))}
         </div>
         <p className="display rehearse-prompt">“{t(scenario.prompt)}”</p>
-        <button className="btn btn-light cursor-target" onClick={() => setPhase('countdown')} disabled={!found}><span className="dot" />{t([`Start (${SECONDS} seconds)`, `دەست پێبکە (${t.n(SECONDS)} چرکە)`])}</button>
+        <div className="rehearse-length">
+          <span className="ui">{t(['How long', 'چەند درێژ'])}</span>
+          <div className="rehearse-scenes" role="radiogroup" aria-label={t(['How long to talk', 'چەند قسە بکەیت'])}>
+            {LENGTHS.map((n) => (
+              <button key={n} role="radio" aria-checked={length === n} className={`chip cursor-target ${length === n ? 'on' : ''}`} onClick={() => setLength(n)}>{lengthName(n, t, true)}</button>
+            ))}
+          </div>
+        </div>
+        <button className="btn btn-light cursor-target" onClick={() => setPhase('countdown')} disabled={!found}><span className="dot" />{t(['Start', 'دەست پێبکە'])} ({lengthName(length, t)})</button>
         {!found && <p className="perform-state ui">{t(['Get your face into the frame first.', 'سەرەتا دەموچاوت بخەرە ناو چوارچێوەکەوە.'])}</p>}
         {history.length > 0 && <p className="perform-state ui">{t([`You have rehearsed ${history.length} times in this browser.`, `${t.n(history.length)} جار لەم وێبگەڕەدا ڕاهێنانت کردووە.`])}</p>}
       </div>
@@ -336,8 +346,8 @@ function Rehearse({ units, found, live, demo }) {
           <p className="rehearse-count display">{t.n(count)}</p>
         ) : (
           <>
-            <div className="rehearse-bar"><span style={{ transform: `scaleX(${left / SECONDS})` }} /></div>
-            <p className="perform-state ui"><span className="rec-dot" /> {t([`Talk to the camera. ${left} seconds left.`, `قسە بۆ کامێراکە بکە. ${t.n(left)} چرکە ماوە.`])}</p>
+            <div className="rehearse-bar"><span style={{ transform: `scaleX(${left / length})` }} /></div>
+            <p className="perform-state ui"><span className="rec-dot" /> {t(['Talk to the camera.', 'قسە بۆ کامێراکە بکە.'])} {clock(left, t)} {t(['left', 'ماوە'])}</p>
             <button className="btn btn-ghost cursor-target" onClick={() => stopRef.current?.()}>{t(['Stop early', 'زووتر ڕایبگرە'])}</button>
             {liveRead && liveRead.faceShare >= 50 && <Reading result={liveRead} seconds={liveRead.seconds} live />}
           </>
@@ -390,7 +400,7 @@ function Report({ result: r, previous, example = false, saved = null }) {
       <h2 className="display perform-name">{t(['What your face gave away.', 'دەموچاوت چی ئاشکرا کرد.'])}</h2>
       <p className="perform-hint">{t(['What someone across the table could have read in those seconds. Cues, not verdicts: they say where people might look, not what you felt.', 'ئەوەی کەسێک لە بەرامبەرتەوە دەیتوانی لەو چرکانەدا بیخوێنێتەوە. ئاماژەن، نەک بڕیار: دەڵێن خەڵک لەوانەیە سەیری کوێ بکەن، نەک تۆ هەستت بە چی کرد.'])}</p>
       <Reading result={r} seconds={r.seconds || SECONDS} />
-      <Timeline data={r.timeline} />
+      <Timeline data={r.timeline} seconds={r.seconds || SECONDS} />
       <ul className="report-cards" role="list">
         {cards.map(([key, value, unit, last, flag]) => (
           <li key={key} className={`report-card ${flag ? `is-${flag}` : ''}`}>
@@ -441,8 +451,28 @@ function Reading({ result, seconds, live = false }) {
   )
 }
 
+// a length as people say it: 10 seconds, 1 minute (short: 10 s, 1 min)
+function lengthName(n, t, short = false) {
+  if (n < 60) return short ? t([`${n} s`, `${t.n(n)} چرکە`]) : t([`${n} seconds`, `${t.n(n)} چرکە`])
+  const m = n / 60
+  return short ? t([`${m} min`, `${t.n(m)} خولەک`]) : t([`${m} minute${m > 1 ? 's' : ''}`, `${t.n(m)} خولەک`])
+}
+
+// time left: 42 under a minute, 1:05 above
+function clock(left, t) {
+  if (left < 60) return t([`${left} seconds`, `${t.n(left)} چرکە`])
+  const m = Math.floor(left / 60), s = left % 60
+  return `${t.n(m)}:${s < 10 ? t.n(0) : ''}${t.n(s)}`
+}
+
+// marks along the timeline: every 5 s for 10 s, every 10 s for 30 s, every 15 s for a minute, every 30 s for two
+function ticks(seconds) {
+  const step = seconds <= 12 ? 5 : seconds <= 35 ? 10 : seconds <= 70 ? 15 : 30
+  return Array.from({ length: Math.floor(seconds / step + 0.001) + 1 }, (_, k) => k * step)
+}
+
 // four lanes over the rehearsal's seconds: smiles, raised brows, pressed lips, blinks
-function Timeline({ data }) {
+function Timeline({ data, seconds }) {
   const t = useT()
   const W = 600, lane = 30, H = lane * 4 + 22
   const n = Math.max(1, data.length - 1)
@@ -461,8 +491,8 @@ function Timeline({ data }) {
       <path d={line(1, 1)} className="tl-brow" />
       {data.map((d, i) => (d[2] ? <rect key={`p${i}`} x={x(i) - 1.5} y={2 * lane + 8} width="3" height={lane - 12} className="tl-press" /> : null))}
       {data.map((d, i) => (d[3] ? <line key={`b${i}`} x1={x(i)} x2={x(i)} y1={3 * lane + 8} y2={3 * lane + lane - 4} className="tl-blink" /> : null))}
-      {Array.from({ length: Math.floor(SECONDS / (SECONDS <= 12 ? 5 : 15)) + 1 }, (_, k) => k * (SECONDS <= 12 ? 5 : 15)).map((s) => (
-        <text key={s} x={96 + (s / SECONDS) * (W - 104)} y={H - 4} className="tl-time" textAnchor="middle">{t.n(s)}{t(['s', 'چ'])}</text>
+      {ticks(seconds).map((s) => (
+        <text key={s} x={96 + (s / seconds) * (W - 104)} y={H - 4} className="tl-time" textAnchor="middle">{t.n(s)}{t(['s', 'چ'])}</text>
       ))}
     </svg>
   )

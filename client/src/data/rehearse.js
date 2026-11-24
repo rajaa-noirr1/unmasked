@@ -1,8 +1,9 @@
-// Rehearse: talk to the camera for 10 seconds, as if to a real person, and see what your face gave
-// away: the cues someone across the table could read, and how you might come across (lib/readings.js).
+// Rehearse: talk to the camera for 10 seconds to 2 minutes, as if to a real person, and see what your face
+// gave away: the cues someone across the table could read, and how you might come across (lib/readings.js).
 // Shaped like future tables: scenarios, metrics, and (in the browser for now) attempts.
 
-export const SECONDS = 10
+export const SECONDS = 10                 // the length chosen until someone picks another
+export const LENGTHS = [10, 30, 60, 120]  // the lengths to choose from (the database allows up to 120 seconds)
 
 // blinks a minute during conversation (Bentivoglio and colleagues, 1997: about 26 talking, 17 at rest)
 export const BLINKS_TALKING = 26
