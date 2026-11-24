@@ -1,10 +1,10 @@
-# Unmasked: 15-minute presentation script
+# Unmasked: presentation script (11 minutes, then questions)
 
 Hogr Mehdi · Hunar Hiwa · Nigar Hayder · Database project · Fall 2026
 
 Slides: https://claude.ai/artifact/14JPezVc2xYmUfV1tFUWrf (the same words are in each slide’s speaker notes).
 
-The slides carry very few words on purpose: the pictures are for the room, the words are yours.
+Three speakers, one line through the whole talk: why this project matters, then how it works, then how it is built and what comes next. You do not need to learn the words by heart: know the idea of each slide and say it your own way.
 Speak slowly. Short sentences. Pause where it says **[pause]**: a pause is worth more than a word.
 Lines in **[brackets]** are actions, not words. Everything after `>` is what you say.
 
@@ -12,38 +12,39 @@ Every slide moves: its background is drawn live, and the drawings on it turn, pu
 
 # The plan at a glance
 
-| # | Part | Slide | Time | Clock |
-|---|---|---|---|---|
-| 1 | The opening | A mask of light coming apart, your names | 1:20 | 0:00 |
-| 2 | The problem | Three myths, struck out | 1:00 | 1:20 |
-| 3 | The three rules | Context, clusters, baseline | 0:50 | 2:20 |
-| 4 | Three ways in | Three moving emblems | 0:30 | 3:10 |
-| 5 | The Map | A breathing heat map | 0:50 | 3:40 |
-| 6 | The Mirror | A face of points, its muscles marked | 0:55 | 4:30 |
-| 7 | Rehearse | Signals and three numbers | 0:50 | 5:25 |
-| 8 | Train your eye | Thirty twinkling dots | 0:50 | 6:15 |
-| 9 | **Live demo** | A path with five stops | 4:30 | 7:05 |
-| 10 | How it’s built | On paper: lens, browser, server, database | 0:50 | 11:35 |
-| 11 | The database | On paper: twelve tables with their keys | 1:05 | 12:25 |
-| 12 | Close | A black hole | 0:40 | 13:30 |
-| | Questions | | 0:50 | 14:10 |
+| # | Part | Speaker | Slide | Time | Clock |
+|---|---|---|---|---|---|
+| 1 | The opening | 1 | A mask of light coming apart in a room of moving light, your names | 1:00 | 0:00 |
+| 2 | Not another management system | 1 | A library, a restaurant, a bookstore, and a table of live data | 0:45 | 1:00 |
+| 3 | Why it matters to you | 1 | A figure with no face, eyes all around it | 0:45 | 1:45 |
+| 4 | The problem | 1 | Three myths, struck out | 0:50 | 2:30 |
+| 5 | The three rules | 1 | Context, clusters, baseline | 0:45 | 3:20 |
+| 6 | Three ways in | 1, then 2 | Three moving emblems; hand over | 0:20 | 4:05 |
+| 7 | **Live demo** | 2 | “Live”, and five stops with their times | 3:30 | 4:25 |
+| 8 | How it’s built | 3 | On paper: lens, browser, server, database | 0:50 | 7:55 |
+| 9 | The database | 3 | On paper: twelve tables with their keys | 1:05 | 8:45 |
+| 10 | What comes next | 3 | Now, spring, then smart glasses | 1:15 | 9:50 |
+| 11 | Close | 3 | An eye of light opening | 0:30 | 11:05 |
+| | Questions | all three | | 3:25 | 11:35 |
 
-**If you run long:** in the demo, skip the tests (stop 4) and stop the rehearsal after ten seconds. Slide 10 can be said in 30 seconds.
+**If you run long:** in the demo, skip the tests (stop 4) and stop the rehearsal after ten seconds. Slide 8 can be said in 30 seconds.
 
-**Who speaks:** decide among the three of you. A simple split: one person for slides 1 to 8, one drives the demo (slide 9), one for slides 10 to 12 and the questions. Swap at “Let me show you” and at “Back to the slides”.
+**Hand-overs:** speaker 1 hands over on slide 6 (“[name] will show you, live”); speaker 2 hands back at the end of the demo (“Now [name] will show you what is behind it”). Say each other’s names.
+
+The deck also holds four hidden slides at the end (the Map, the Mirror, Rehearse, Train your eye). The live demo shows the same things; unhide one in the editor if you want it back.
 
 ## Before you start (10 minutes, earlier that day)
 
-1. Double-click **Start Unmasked.bat** in the Why folder (or run `npm.cmd run site` there) and open http://localhost:5181.
+1. Double-click **Start Unmasked.bat** in the Why folder (or run `npm.cmd run site` there) and open http://localhost:5181, or use the online version: https://rajaa-noirr1.github.io/unmasked/. Make sure the site is in **English**: the demo ends by switching to Kurdish.
 2. Open **The Mirror**, click **Turn on the mirror** and allow the camera. The first time, it downloads the face tracker (about 12 MB, needs internet), so do this before you are on stage.
-3. Sit facing a light. Face tracking needs your face lit from the front.
+3. Speaker 2: stand or sit facing a light, so the camera can read the muscles. If the camera fails during the demo, click **See an example first** and show the example report.
 4. Do one short rehearsal (Job interview, Start, then Stop early) so you know where the buttons are.
-5. Make sure the site is in **English** before you start; the demo ends by switching to Kurdish.
+5. In a second tab, sign in at http://localhost:5181/admin, in case the teacher asks you to add a question.
 6. Full-screen the browser. Keep the slides in another window, open in **Present**.
 
-# The script
+# Speaker 1 — Why this project (about 4 minutes)
 
-## Slide 1 — The opening (1:20)
+## Slide 1 — The opening (1:00)
 
 Screen: a mask drawn in lines of light, coming apart into dust, and your three names. Walk to the middle. Wait two full seconds before you speak. Let the mask move.
 
@@ -59,7 +60,31 @@ Screen: a mask drawn in lines of light, coming apart into dust, and your three n
 
 > We are Hogr, Hunar and Nigar. **[click]**
 
-## Slide 2 — The problem (1:00)
+## Slide 2 — Not another management system (0:45)
+
+Screen: three grey cards (a library, a restaurant, a bookstore) with rows of names and numbers, an arrow, and a glowing gold table of live data from Unmasked, a light running down its rows.
+
+> When people hear “database project”, they think of a library system. A restaurant system. A bookstore. **[Point at the grey cards.]** Those matter, but a database is not only for storing names and numbers.
+
+> Every real website has a database behind it. Without one, a site is like a PDF: it cannot learn anything, compare anything, or show you your progress.
+
+> **[Point at the gold table.]** So we took the database somewhere alive: the psychology of the human body. Every signal of every part of the body, every muscle the camera reads, every test answer, every rehearsal someone does, is a row. That is Unmasked. **[click]**
+
+## Slide 3 — Why it matters to you (0:45)
+
+Screen: a figure with no face in the middle, eight eyes around it looking in; three situations; two lines on what Unmasked gives you.
+
+> Why should this matter to you? **[pause]**
+
+> Remember: everyone in this room can see your face, except you. **[Point at the eyes around the figure.]**
+
+> After university, every one of us will sit in job interviews, give presentations, have hard conversations. Plenty of smart people lose there, not because of what they say, but because of habits they never knew they had: looking away, pressing their lips, blinking fast.
+
+> **[First line.]** Unmasked works like a free coach. It shows you your own tells, so you can work on them.
+
+> **[Second line.]** And it is in Kurdish, with every claim checked against research, not against what goes viral on TikTok and social media. **[click]**
+
+## Slide 4 — The problem (0:50)
 
 > Most of what people believe about body language comes from books, videos and the internet. And a lot of it falls apart the moment you check it.
 
@@ -73,7 +98,7 @@ Screen: a mask drawn in lines of light, coming apart into dust, and your three n
 
 Sources, if asked: Mehrabian (1971); Bond and DePaulo (2006); Ranehill and colleagues (2015).
 
-## Slide 3 — The three rules (0:50)
+## Slide 5 — The three rules (0:45)
 
 > Here is how. **[pause]** One gesture means almost nothing.
 
@@ -85,103 +110,57 @@ Sources, if asked: Mehrabian (1971); Bond and DePaulo (2006); Ranehill and colle
 
 > Everything on our website is built on these three rules. **[click]**
 
-## Slide 4 — Three ways in (0:30)
+## Slide 6 — Three ways in (0:20)
 
-> So we built a website with three rooms. Three ways in. **[pause]**
+Screen: three moving emblems: the Map, the Mirror, Train your eye.
 
-> **[Point left.]** The Map: the whole body, part by part. What each part signals to other people, and what it feels from the inside.
+> We built these three rules into a website with three rooms. **[pause]**
 
-> **[Middle.]** The Mirror: your own face, through your camera. What it is giving away, right now.
+> **[Left.]** The Map: learn what each part of the body says, and what it feels.
 
-> **[Right.]** And Train your eye: tests that teach you to read people properly, one question at a time.
+> **[Middle.]** The Mirror: see your own face, and rehearse before an interview.
 
-> Let me show you each one quickly, and then you will see them live. **[click]**
+> **[Right.]** And Train your eye: test yourself, one question at a time.
 
-## Slide 5 — The Map (0:50)
+> Rather than describe them, **[name of speaker 2]** will show you, live. **[Hand over.]** **[click]**
 
-> The first room is the Map. **[pause]**
+# Speaker 2 — The live demo (3:30)
 
-> You touch any part of the body, and it tells you two things. What that part says to other people, and what it feels from the inside.
+## Slide 7 — Live demo (3:30)
 
-> Take the shoulders. Raised and held usually means cold, fear, bracing yourself. But a quick lift and drop is just a shrug: “I don’t know.” Every signal comes with its context, like that. And with a label for how well the research supports it. Some are well supported, some are contested, and some popular ones are barely supported at all, and we say so.
+On screen: a red “Live demo” badge, “Let me show you.”, and the five stops in order, each with what you will do and how long it takes, about 3:30 in all. Leave it up for a moment so the room sees the plan, then switch.
 
-> **[Point at the heat.]** You can also choose a feeling and see where people feel it in their bodies, like heat. That comes from a real study, where hundreds of people coloured in where they feel each emotion.
+Switch to the browser, full screen, on the home page, in English. About three and a half minutes. Talk while you click; never wait in silence.
 
-> Thirteen parts of the body, thirty-six signals, nine feelings. **[click]**
+### 01 · The brain (15 s)
 
-## Slide 6 — The Mirror (0:55)
+> This is the home page. **[Move the pointer slowly over the brain.]** The brain is made of thousands of points of light; point at any part and it tells you what that part does.
 
-> The second room is the Mirror. **[pause]**
+### 02 · The Map (45 s)
 
-> When people first see it tracking their face, they ask a fair question: what is it for? **[pause]** Here is the answer. Everyone can see your face, except you. The Mirror is the first time you get to see what they see.
+> **[Click The Map.]** Before you can read anyone else, you need the signals. Thirteen parts of the body, thirty-six signals and nine feelings, all stored as data. **[Click Anger.]** Here is anger, as heat in the body. **[Click the shoulders.]** And every signal comes with its context, and a label for how well the research supports it.
 
-> It turns on your camera and reads fifteen movements of your face, live, and names the muscle behind each one. These are the same names psychologists use, from the Facial Action Coding System.
+### 03 · The Mirror (1 min 40 s)
 
-> **[Point at the face of points.]** Notice it is only points. That is on purpose: the Mirror does not care who you are. It only follows the points, how each muscle moves.
+> **[Click The Mirror, then Turn on the mirror.]** Now look at yourself. The camera reads fifteen movements of the face, live, using the Facial Action Coding System. **[Raise your eyebrows, then smile.]** Frontalis when I raise my brows; zygomaticus when I smile. And notice what it never says: what I feel. It names muscles and real signals, like the difference between a polite smile and one that reaches the eyes.
+> **[Rehearse tab, Job interview, Start. Talk for 10 to 15 seconds, then Stop early.]** Before a job interview, you talk for forty-five seconds and get a report: blinks, smiles, pressed lips. There is also Poker face, where six lines try to provoke your face.
+If the camera does not start: click See an example first.
+If they ask “What if I am stressed?”: stress is not the enemy. The point is muscle memory: once you see in numbers that you blink fast or press your lips under stress, you notice it, and you can control it in the real interview.
+If they ask “Does it record my face?”: no. The face tracking runs inside the browser; no picture or video leaves your device. Only the numbers of the report go to the database, so you can see your progress.
 
-> **[Point at the two gold points.]** Look at these two. One pulls the corners of your mouth up. The other lifts your cheeks and crinkles your eyes. A smile with only the first reads as polite. A smile with both reads as real. People notice the difference, even if they cannot say why.
+### 04 · The tests (35 s)
 
-> And notice what the Mirror never says: it never tells you what you feel. A raised eyebrow can mean a dozen things. Muscles, never feelings.
+> **[Click Train your eye, then the context test.]** Three tests, thirty questions: twelve for the eyes, ten for the body, eight for context. **[Answer one question.]** It does not just say right or wrong: it shows the cues that decided it, because a score on its own teaches you nothing.
 
-> One more thing. The camera never leaves your device. Nothing is recorded, nothing is sent. **[click]**
+### 05 · Kurdish (15 s)
 
-## Slide 7 — Rehearse (0:50)
+> **[Click کوردی in the top corner.]** And every page, every test, in Kurdish Sorani, with the whole layout flipped right to left. **[Click English to switch back.]**
 
-> So what do you do with it? You rehearse. **[pause]**
+> **[Back to the slides, and hand over.]** That was the face of the project. Now **[name of speaker 3]** will show you what is behind it: the technology, the database, and where it goes next. **[click]**
 
-> Before an interview, a presentation, or a hard conversation, you pick the situation. You talk to the camera for forty-five seconds, as if the person were sitting in front of you. And then you get a report of your tells.
+# Speaker 3 — How it is built, and what comes next (about 3:40)
 
-> **[Point at the signal.]** This is an example. Gold is smiling. Blue is raised eyebrows. Red is where the lips pressed together. And every spark at the bottom is a blink.
-
-> **[Point at the numbers.]** Thirty-one blinks a minute, when about twenty-six is usual while talking. Four smiles, and only one of them reached the eyes. Four times the lips pressed together, which people often read as holding something back.
-
-> **[pause]** These are cues, not verdicts. The report tells you where people might look. It never tells you what you felt.
-
-> Then you try again, and it compares you with your last try. There is also a Poker face mode, where you keep your face still while six lines try to provoke it. **[click]**
-
-## Slide 8 — Train your eye (0:50)
-
-> The third room trains your eye. Three tests, thirty questions. Every dot here is one question.
-
-> **[Gold.]** The eyes test, twelve questions. You see only a thin strip of a face, just the eyes, and four feelings that are deliberately close. You choose, and then the frame widens to show the whole face. This format comes from a real psychology test.
-
-> **[Pale.]** The body test, ten questions. The face stays hidden until you answer, so you have to read the posture alone.
-
-> **[Blue.]** And the context test, eight questions, which is my favourite. The same crossed arms appear in different scenes. In the snow, they mean cold. Facing someone in an argument, they mean angry. In a lecture, they mean concentrating. That is rule number one, context, turned into a test.
-
-> And every answer explains itself. You do not just get “wrong”. You get the cues that decided it, because a score on its own teaches you nothing.
-
-> **[pause]** Enough slides. Let me show you. **[click]**
-
-## Slide 9 — Live demo (4:30)
-
-Switch to the browser, full screen, on the home page. Talk while you click; never wait in silence.
-
-**01 · The brain (40 s)**
-
-> This is the home page. **[Move the pointer slowly over the brain.]** The brain is made of thousands of points of light. Point at any part and it lights up and tells you what it does. The front, the frontal lobe, plans and controls the expressions you choose to make. **[Click the brain once.]** Click, and it fires a signal. **[Move the pointer over the headline.]** Even the headline reacts: the letters swell as you pass them.
-
-**02 · The Map (50 s)**
-
-> **[Click The Map.]** The Map. **[Click Anger.]** I choose anger, and watch where it lands: the head, the chest, the arms, the fists. **[Click the shoulders.]** Now the shoulders: what they say, what they feel, and how the setting changes the reading. And this badge: how strong the evidence is.
-
-**03 · The Mirror (1 min 40 s)**
-
-> **[Click The Mirror.]** The Mirror. **[Move the pointer over the portrait’s face.]** Before the camera, notice the portrait: move over his face and it unmasks him, and the muscle under the lens lights up. **[Click Turn on the mirror.]** Now my own face. **[Raise your eyebrows, then smile.]** Watch the names on the right: frontalis when I raise my brows. Zygomaticus when I smile. **[Rehearse tab, Job interview, Start.]** Let me rehearse a job interview. **[Talk for about fifteen seconds, then click Stop early.]** And here is my report. **[Point at one number and say what it found.]**
-
-If the camera does not start: click **See an example first** and show the example report instead.
-
-**04 · The tests (50 s)**
-
-> **[Click Train your eye, then the context test.]** The context test. **[Answer the first question.]** Whatever I pick, the answer explains itself: the cues that decided it.
-
-**05 · Kurdish (30 s)**
-
-> **[Click کوردی in the top corner.]** And one more thing. The whole website, every page, every test, in Kurdish Sorani. Right to left. **[Click English to switch back.]**
-
-> **[Switch back to the slides.]** Back to the slides. **[click]**
-
-## Slide 10 — How it’s built (0:50)
+## Slide 8 — How it’s built (0:50)
 
 Screen, on paper: a lens, a browser, a server and a database drawn in ink, a dashed line between your device and our server, and a light going out along the top line and back along the blue one.
 
@@ -197,7 +176,7 @@ Screen, on paper: a lens, a browser, a server and a database drawn in ink, a das
 
 > We write plain SQL, with no ORM, so every query can be shown and checked in pgAdmin. **[click]**
 
-## Slide 11 — The database (1:05)
+## Slide 9 — The database (1:05)
 
 Screen, on paper: twelve of the tables drawn as cards with their keys, each foreign key a line with a crow’s foot on its “many” side, coloured by part of the site (red the Map, blue the Mirror, gold the tests), and two notes underneath on the views and the triggers.
 
@@ -215,25 +194,40 @@ Screen, on paper: twelve of the tables drawn as cards with their keys, each fore
 
 > **[Point at the notes below.]** The views do the counting the site shows: scores, and how everyone else answered. And the triggers guard the data: an answer must belong to its test and its question, and the last answer finishes the attempt. **[click]**
 
-## Slide 12 — Close (0:40)
+## Slide 10 — What comes next (1:15)
 
-Slow down for the last slide. Let the black hole turn for a moment before you speak.
+Screen: a line with three stages (now, spring, then), and smart glasses drawn in gold: in the left lens a signal spikes past its own baseline; in the right lens three signals appear and join. Underneath: Never “they are lying”.
 
-> We started with a question. Everyone in this room can see your face. What are they reading in it? **[pause]**
+> Where does it go from here? **[pause]**
 
-> Unmasked is how you find out. Read the room before the body. Look for clusters, not single signals. Compare people to themselves. And now, for the first time, see what everyone else sees when they look at you.
+> **[Point at Now.]** Stage one is done: the website, the database and the API, in two languages.
 
-> **[pause]** Everyone can see your face. Now you can too.
+> **[Spring.]** Next semester, in the spring, we build AI on top of this same database. Every signal, every question and every rehearsal report is already in it, ready to learn from.
 
-> Thank you. **[pause]** We are happy to take your questions.
+> **[Point at the glasses.]** And it does not have to stay on a laptop. You may know the series Person of Interest. We mean something much more modest, and real: smart glasses as an assistant, in a job interview, a sales meeting, or a training centre.
 
-# Likely questions
+> **[Point at the line below.]** They would never say “this person is lying”, because nothing can. They would notice what our rules notice: **[left lens]** changes from a person’s own baseline, **[right lens]** and signals that come in clusters, like signs of stress. **[click]**
 
-- **“Can it tell if I am lying?”** No, and nothing can, reliably, from the body alone. The site says so on purpose.
-- **“Does it read emotions?”** No. It names muscles and the cues people tend to read, never feelings, because a face alone is not enough to know what someone feels.
-- **“Is my video saved?”** No. The camera image stays in the browser. Only the numbers of a rehearsal report are kept.
-- **“Why PostgreSQL?”** It is a full relational database with real constraints, views and triggers, it is free, and plain SQL lets us show every query.
-- **“Can you add a question, or anything else, without changing the code?”** Yes. The site has an admin page, `/admin`, behind a sign-in. An admin can add, edit, reorder or delete test questions, Map signals, Rehearse situations and Poker face lines, in English and Kurdish. Every change goes straight into the database and is written to a log, `admin.changes`; passwords are kept only as scrypt hashes. The admin tables sit in their own schema, apart from the thirty-one tables the site reads. We can show it live.
-- **“Where do the facts come from?”** Every page links its sources on the How page: body-mapping research (Nummenmaa and colleagues, 2014), the Facial Action Coding System (Ekman, Friesen and Hager, 2002), the eyes test format (Baron-Cohen and colleagues, 2001), and more.
-- **“Why Kurdish?”** Because it is our language, and people should be able to learn this in it.
-- **“What is the black hole?”** It is drawn live, the way the film Interstellar showed Gargantua: the disk behind the hole is bent over the top and under the bottom by its gravity.
+## Slide 11 — Close (0:30)
+
+Screen: an eye drawn in lines of light, like the mask on the first slide, opening; then the closing words and your names.
+
+Slow down for the last slide. Let the eye open before you speak.
+
+> We asked you a question at the start. Everyone in this room can see your face, except you. **[pause]**
+
+> With Unmasked, now you can too.
+
+> Thank you very much. **[pause]** We are happy to take your questions.
+
+# Likely questions: who answers what
+
+- **Speaker 1: “What is it for, and who would use it?”** Students and job seekers before interviews and presentations; HR and sales teams; training and psychology centres, through the eyes and context tests.
+- **Speaker 1: “Where does the psychology come from?”** Published research: the Facial Action Coding System (Ekman, Friesen and Hager, 2002), the body maps of feelings (Nummenmaa and colleagues, 2014), and the eyes test (Baron-Cohen and colleagues, 2001). Every page lists its sources on the How page.
+- **Speaker 2: “Does it read feelings?”** No, on purpose. It names the muscles that move and the cues people read; a raised eyebrow can mean many things, and a face alone is not enough to know what someone feels.
+- **Speaker 2: “Why Kurdish?”** Good sources in Kurdish are rare, people should be able to learn this in their own language, and the right-to-left design and full translation made the project harder and better.
+- **Speaker 2: “Is my video saved?”** No. The camera image stays in the browser. Only the numbers of a rehearsal report are kept.
+- **Speaker 3: “Why not NoSQL, like MongoDB?”** Our data is deeply related: a part of the body has signals, a question has options, an answer belongs to an attempt. PostgreSQL keeps it in order with constraints and joins.
+- **Speaker 3: “Why PostgreSQL and plain SQL, with no ORM?”** It is a full relational database with real constraints, views and triggers, it is free, and writing every query ourselves lets us show each one in pgAdmin.
+- **Speaker 3: “Does the website really use the database?”** Yes. Every page reads its content from PostgreSQL through the API, rehearsals and answers are saved there, and an admin can add a question from the admin page (`/admin`), behind a sign-in. We can show it live.
+- **Anyone: “Can it tell if I am lying?”** No, and nothing can, reliably, from the body alone. The site says so on purpose.
