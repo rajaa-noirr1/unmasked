@@ -1,0 +1,14 @@
+Eyes test: 12 close-ups, face sharp and lit, looking toward the camera. Full details in ../SHOT-LIST.md
+
+suspicious.jpg   lower lids tightened, eyes narrowed, gaze fixed on someone
+contemptuous.jpg head tipped back, looking down the nose, lids half lowered
+afraid.jpg       white above the iris, brows raised and pulled together
+grieving.jpg     inner ends of the brows raised, heavy lids, gaze low
+amused.jpg       crinkles at the outer corners, cheeks pushing the lower lids up
+distressed.jpg   eyes wide but unfocused, inner brows raised and drawn together
+furious.jpg      brows pulled hard down over wide, glaring eyes
+ashamed.jpg      gaze dropped down and away, lids lowered, head bowed
+worried.jpg      inner brows lifted and slightly together, eyes steady
+curious.jpg      eyes slightly widened and locked on something, head tilted
+smug.jpg         upper lids half lowered, head back a little, holding the gaze
+affectionate.jpg soft lowered lids, a faint smile under the eyes, resting gaze
